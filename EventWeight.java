@@ -25,7 +25,7 @@ public class EventWeight
 	void weightCancel(Button bt)
 	{
 		bt.setOnAction((ActionEvent) ->
-		{ weight.assignSceneToStage("home"); });
+		{ weight.assignSceneToStage("preference"); });
 	}
 	
 	void weightSave(Button bt, TextField chtf1, TextField chtf2, 
