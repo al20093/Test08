@@ -1,6 +1,5 @@
-
 /****************************************/ 
-/*author:名久井愛紗 6/19更新 
+/*author:名久井愛紗 6/25更新 
 /*C5:服装提案部所属 
 /*SceneArea: 
 /*服装提案部での画面作成処理を記述する
@@ -37,9 +36,8 @@ class SceneArea extends SceneMain{
 		//ラベルリスト作成
 		List<Label> lb = new ArrayList<Label>();
 		List<Label> lb2 = new ArrayList<Label>();
-		lb.add(new Label("服装提案"));
 		lb.add(new Label("お住まいの地域を入力してください"));
-		for(int i=0; i<2; i++) {
+		for(int i=0; i<1; i++) {
 			lb.get(i).setFont(Font.font
 					(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
 		}
@@ -74,9 +72,17 @@ class SceneArea extends SceneMain{
 					(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
 		}
 		//ラベルをVBoxに割り当てる
+		
+		VBox vbt = new VBox();
+		vbt.setAlignment(Pos.CENTER);
+		vbt.getChildren().addAll(SceneContents.subTitle("服装提案"));
+		vbt.getChildren().addAll(lb);
+		
+		/*
 		VBox vb = new VBox();
 		vb.setAlignment(Pos.CENTER);
 		vb.getChildren().addAll(lb);
+		*/	
 				
 		HBox hb = new HBox();
 		hb.setAlignment(Pos.CENTER);
@@ -95,7 +101,8 @@ class SceneArea extends SceneMain{
 		vb3.setSpacing(30);
 		vb3.getChildren().addAll(bt2);
 		//ペイン割り当て
-		bp.setTop(vb);
+		bp.setTop(vbt);
+		//bp.setTop(SceneContents.subTitle("地域入力"));
 		bp.setRight(vb2);
 		bp.setLeft(vb3);
 		bp.setCenter(hb);
@@ -110,18 +117,18 @@ class SceneArea extends SceneMain{
 		 BorderPane bp = new BorderPane();
 		//ラベルリスト作成
 		List<Label> lb = new ArrayList<Label>();
-		lb.add(new Label("服装提案"));
 		lb.add(new Label("提案された服装"));
-		for(int i=0; i<2; i++) {
+		for(int i=0; i<1; i++) {
 			lb.get(i).setFont(Font.font
 						(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
 		}
 		//ラベルをVBoxに割り当てる
-		VBox vb = new VBox();
-		vb.setAlignment(Pos.BASELINE_LEFT);
-		vb.getChildren().addAll(lb);
+		VBox vbt = new VBox();
+		vbt.setAlignment(Pos.BASELINE_LEFT);
+		vbt.getChildren().addAll(SceneContents.subTitle("服装提案"));
+		vbt.getChildren().addAll(lb);
 		//ペイン割り当て
-		bp.setTop(vb);
+		bp.setTop(vbt);
 		//シーンの作成
 		scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 			
