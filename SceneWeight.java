@@ -1,3 +1,10 @@
+/**********************************************/
+/*author:金　東柱 6/25更新
+/*C4:重み処理部所属
+/*SceneWeight:
+/*重み設定画面の画面を記述したクラス
+/**********************************************/
+
 package application;
 
 import javafx.geometry.Insets;
@@ -23,8 +30,6 @@ class SceneWeight extends SceneMain
 	
 	void createWeight()
 	{
-		//try 
-		//{
 			BorderPane bp = new BorderPane();
 			EventWeight event = new EventWeight(this);
 			
@@ -126,10 +131,8 @@ class SceneWeight extends SceneMain
 			bp.setBottom(bhbox);
 			
 			event.weightCancel(btn1);
+			event.weightSave(btn2, chtf1, chtf2, chtf3, chtf4, chtf5);
 			this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
-		//} catch(Exception e) {
-			//e.printStackTrace();
-		//}
 	}
 	
 	Scene getScene() 
