@@ -10,8 +10,14 @@ package application;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -136,64 +142,112 @@ public class UserData
 		return fbRead;
 	}
 	
+	private static Connection con = null;
+	
+	public static void closeConnection()
+	{
+		if(con != null) 
+		{
+			try 
+			{
+				con.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static Connection getConnection() 
+	{
+		if(con == null)
+		{
+			try 
+			{
+				Class.forName("org.sqlite.JDBC");
+				con = DriverManager.getConnection("jdbc:sqlite:user.sqlite3");
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return con;
+	}
+	
+	
 	void clothesWrite(Clothes clothes) 
 	{
-		Connection con = null;
-		String dbFileUrl = "jdbc:sqlite:user.sqlite3";
-		String sql = "INSERT INTO TEST_TABLE VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO TEST_TABLE(name, kind, part, index) VALUES (?, ?, ?, ?)";
 		PreparedStatement prestmt;
 		try
 		{
-			Class.forName("org.sqlite.JDBC");
-			con = DriverManager.getConnection(dbFileUrl);
 			prestmt = con.prepareStatement(sql);
-				prestmt.set
-				prestmt.set
-				prestmt.set
-				prestmt.set
-				prestmt.set
+			prestmt.setString(1, clothes.name);
+			prestmt.setString(2, clothes.kind);
+			prestmt.setString(3, clothes.part);
+			prestmt.setDouble(4, clothes.index);
 				
-				prestmt.executeUpdate();
-				prestmt.close();
-				con.close();
+			prestmt.executeUpdate();
+			prestmt.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	void clothesUpdate(Clothes clothes) 
 	{
-		
+		String sql = "UPDATE TEST_TABLE SET name = ?, kind = ?, part = ?, index = ? WHERE id = ";
+		PreparedStatement prestmt;
+		try
+		{
+			prestmt = con.prepareStatement(sql);
+			prestmt.setInt(5, clothes.id);
+			prestmt.setString(1, clothes.name);
+			prestmt.setString(2, clothes.kind);
+			prestmt.setString(3, clothes.part);
+			prestmt.setDouble(4, clothes.index);
+				
+			prestmt.executeUpdate();
+			prestmt.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	void clothesDelete(Clothes clothes) 
 	{
-		
+		String sql = "DELETE FROM TEST_TABLE WHERE id = ?";
+		PreparedStatement prestmt;
+		try
+		{
+			prestmt = con.prepareStatement(sql);
+			prestmt.setInt(1, clothes.id);
+				
+			prestmt.executeUpdate();
+			prestmt.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	List<Clothes> clothesRead()
 	{
 		List<Clothes> cRead = new ArrayList<Clothes>();
-		Connection con = null;
-		String dbFileUrl = "jdbc:sqlite:user.sqlite3";
 		try 
 		{
-			con = DriverManager.getConnection(dbFileUrl);
 			Statement stmt = con.createStatement();
 			String sql = "SELECT * FROM TEST_TABLE";
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) 
 			{
-				//cReadの処理 = rs.getString("id"); の形
+				cRead.add(new Clothes(rs.getInt("id"), rs.getString("name"), rs.getString("kind"), 
+											rs.getString("part"), rs.getDouble("index")));
 			}
 			stmt.close();
-			con.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return cRead;
 	}
 	
-	void createCList() 
+	List<Clothes> createCList() 
 	{
 		
 	}
