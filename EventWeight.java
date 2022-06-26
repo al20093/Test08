@@ -33,7 +33,7 @@ public class EventWeight
 	{
 		bt.setOnAction((ActionEvent) ->
 		{ 	
-			ArrayList<Double> wdata = new ArrayList<>();
+			List<Double> wdata = new ArrayList<Double>();
 			for(int i = 0; i < chtf.size();++i)
 			{
 				wdata.add(Double.parseDouble(chtf.get(i).getText()));

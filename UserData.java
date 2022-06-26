@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -54,10 +55,12 @@ public class UserData
 		return gender;
 	}
 	
-	void weightWrite(ArrayList<Double> weight)
+	void weightWrite(List<Double> weight)
 	{
 		JSONObject obj = new JSONObject();
 		obj.put("weight", weight);
+		
+		System.out.println(System.getProperty("user.dir") + "\\data.json");
 		
 		try
 		{

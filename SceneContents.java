@@ -38,30 +38,37 @@ public class SceneContents
 	//システムのすべてのシーンを作成するメソッド
 	//sceneMain:すべてのシーンのスーパークラスとなるSceneMainクラス
 	//-------------------------------------------------------------
-	static void createScene(SceneMain sceneMain) {
+	static void createScene(SceneMain sceneMain)
+	{
 		SceneBasic initial = new SceneBasic(sceneMain.getStage());
 		SceneBasic home = new SceneBasic(sceneMain.getStage());
 		SceneBasic preference = new SceneBasic(sceneMain.getStage());
-		//SceneFeedback feedback = new SceneFeedback(sceneMain.getStage());
+		SceneFeedback feedback = new SceneFeedback(sceneMain.getStage());
 		SceneArea area = new SceneArea(sceneMain.getStage());
 		SceneArea proposal = new SceneArea(sceneMain.getStage());
 		SceneWeight weight = new SceneWeight(sceneMain.getStage());
+		SceneSettingClothing addition = new SceneSettingClothing(sceneMain.getStage());
+		SceneSettingClothing delete = new SceneSettingClothing(sceneMain.getStage());
 		
 		initial.createInitial();
 		home.createHome();
 		preference.createPreference();
-		//feedback.createFeedback();
+		feedback.createFeedback();
 		area.createArea();
 		proposal.createClothing();
 		weight.createWeight();
+		addition.createAddition();
+		delete.createDelete();
 		
 		sceneMap.put("initial", initial.getScene());
 		sceneMap.put("home", home.getScene());
 		sceneMap.put("preference", preference.getScene());
-		//sceneMap.put("feedback", feedback.getScene());
+		sceneMap.put("feedback", feedback.getScene());
 		sceneMap.put("area", area.getScene());
 		sceneMap.put("clothing", proposal.getScene());
 		sceneMap.put("weight", weight.getScene());
+		sceneMap.put("addition", addition.getScene());
+		sceneMap.put("delete", delete.getScene());
 	}
 	
 	//----------------------------------------------------------------------
@@ -92,7 +99,7 @@ public class SceneContents
 	
 	static double Lagrange(double x, double...pos)
 	{
-		double result;
+		double result = 0.0;
 		return result;
  	}
 }

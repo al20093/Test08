@@ -6,6 +6,8 @@
 /**********************************************/
 package application;
 
+import java.util.List;
+
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -26,7 +28,7 @@ public class EventSettingClothing
 		{settingclothing.assignSceneToStage("preference");}); //キャンセルボタンを押したらW10画面へ遷移
 	}
 	
-	void clickRegister1(Button register, TextField nameData, TextField clothingTypeData, TextField bodyTypeData, TextField clothingNumberData)
+	void clickRegister1(Button register, List<TextField> tf)
 	{
 		register.setOnAction((ActionEvent) -> 
 		{
@@ -37,15 +39,13 @@ public class EventSettingClothing
 			
 			Clothes clothes = new Clothes();
 			
-			
-			
-			clothes.name = nameData.getText();
-			clothes.kind = clothingTypeData.getText();
-			clothes.part = bodyTypeData.getText();
-			clothes.index = Double.parseDouble(clothingNumberData.getText());
+			clothes.name = tf.get(0).getText();
+			clothes.kind = tf.get(1).getText();
+			clothes.part = tf.get(2).getText();
+			clothes.index = Double.parseDouble(tf.get(3).getText());
 			
 			//データ処理部の書き込みメソッドを呼び出す
-			 new DataSettingClothing().addClothes(clothes);
+			//new DataSettingClothing().addClothes(clothes);
 			
 			//確認用
 			System.out.println(clothes.name);
@@ -101,10 +101,10 @@ public class EventSettingClothing
 		{settingclothing.assignSceneToStage("delete");}); //削除ボタンを押したらW9画面へ移動
 	}
 	
-	void clickAdd(Button add)
+	void clickAddition(Button add)
 	{
 		add.setOnAction((ActionEvent) ->
-		{settingclothing.assignSceneToStage("add");}); //追加ボタンを押したらW9画面へ移動
+		{settingclothing.assignSceneToStage("addition");}); //追加ボタンを押したらW9画面へ移動
 	}
 }
 
