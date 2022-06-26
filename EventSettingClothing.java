@@ -6,6 +6,9 @@
 /**********************************************/
 package application;
 
+import java.util.List;
+
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -25,7 +28,7 @@ public class EventSettingClothing
 		{settingclothing.assignSceneToStage("preference");}); //キャンセルボタンを押したらW10画面へ遷移
 	}
 	
-	void clickRegister1(Button register, TextField nameData, TextField clothingTypeData, TextField bodyTypeData, TextField clothingNumberData)
+	void clickRegister1(Button register, List<TextField> tf)
 	{
 		register.setOnAction((ActionEvent) -> 
 		{
@@ -36,12 +39,13 @@ public class EventSettingClothing
 			
 			Clothes clothes = new Clothes();
 			
+			clothes.name = tf.get(0).getText();
+			clothes.kind = tf.get(1).getText();
+			clothes.part = tf.get(2).getText();
+			clothes.index = Double.parseDouble(tf.get(3).getText());
 			
-			
-			clothes.name = nameData.getText();
-			clothes.kind = clothingTypeData.getText();
-			clothes.part = bodyTypeData.getText();
-			clothes.index = Double.parseDouble(clothingNumberData.getText());
+			//データ処理部の書き込みメソッドを呼び出す
+			//new DataSettingClothing().addClothes(clothes);
 			
 			//確認用
 			System.out.println(clothes.name);
@@ -49,34 +53,34 @@ public class EventSettingClothing
 			System.out.println(clothes.part);
 			System.out.println(clothes.index);
 			
-			boolean check = new CreateAlert().confirm("登録が完了しました。"); //登録完了アラート画面表示
-			if(check == true)
-			{
-				System.out.println("true");
-			}else{
-				System.out.println("false");
-			}
+			new CreateAlert().complete("登録が完了しました。"); //登録完了アラート画面表示
+			
 			
 		}); 
 	}
 	
-	void clickRegister2(Button register, ListView<String> lv)
+	void clickRegister2(Button register, ObservableList<String> ol, ListView<String> lv)
 	{
 		register.setOnAction((ActionEvent) -> 
 		{
 			String deleteClothing;
+			String name;
 			deleteClothing = lv.getSelectionModel().getSelectedItem();
+			
+			//名前を取り出す
+			name = deleteClothing;
+			//データ処理部を呼び出す,消すアイテムをclotheにいれる
+			Clothes clothes = new DataSettingClothing().matching(name);
+			for(int i = 0; i < ol.size(); i++)
+			{
+				if(ol.get(i).equals(clothes.name)) ol.remove(i);
+			}
 			
 			//確認用
 			System.out.println(deleteClothing);
 			
-			boolean check = new CreateAlert().confirm("削除が完了しました。"); //登録完了アラート画面表示
-			if(check == true)
-			{
-				System.out.println("true");
-			}else{
-				System.out.println("false");
-			}
+			new CreateAlert().complete("削除が完了しました。"); //登録完了アラート画面表示
+			
 			
 		}); 
 	}
@@ -84,13 +88,14 @@ public class EventSettingClothing
 	void clickDelete(Button delete)
 	{
 		delete.setOnAction((ActionEvent) ->
-		{settingclothing.assignSceneToStage("delete");}); //削除ボタンを押したらW9画面へ移動
+		{
+			settingclothing.assignSceneToStage("delete");}); //削除ボタンを押したらW9画面へ移動
 	}
 	
-	void clickAdd(Button add)
+	void clickAddition(Button add)
 	{
 		add.setOnAction((ActionEvent) ->
-		{settingclothing.assignSceneToStage("add");}); //追加ボタンを押したらW9画面へ移動
+		{settingclothing.assignSceneToStage("addition");}); //追加ボタンを押したらW9画面へ移動
 	}
 }
 

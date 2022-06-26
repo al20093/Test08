@@ -26,7 +26,7 @@ class EventFeedback
 	void clickCancel(Button cancel)
 	{
 		cancel.setOnAction((ActionEvent) ->
-		{feedback.assignSceneToStage("preference");}); //キャンセルボタンを押したらW10画面へ遷移
+		{ feedback.assignSceneToStage("preference"); }); //キャンセルボタンを押したらW10画面へ遷移
 	}
 	
 	void clickRegister(Button register, int size)
@@ -41,13 +41,8 @@ class EventFeedback
 			counter++;
 			if(counter == size) 
 			{
-				boolean check = new CreateAlert().confirm("登録が完了しました。"); //登録完了アラート画面表示
-			if(check == true)
-			{
-				System.out.println("true");
-			}else{
-				System.out.println("false");
-			}
+				new CreateAlert().complete("登録が完了しました。"); //登録完了アラート画面表示
+				
 			}
 			
 		});
@@ -62,9 +57,4 @@ class EventFeedback
 			radioValue = Double.parseDouble(rb.getText());
 		});
 	}
-	
-	/*public void handle(ActionEvent e) {
-		RadioButton tmp = (RadioButton) e.getSource();
-		int res = Integer.parseInt(tmp.getText());
-	}*/
 }
