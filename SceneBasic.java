@@ -40,7 +40,7 @@ public class SceneBasic extends SceneMain
 		
 		lb.add(new Label("初期設定を行います"));
 		lb.add(new Label("画面内をクリックしてください"));
-		for(int i=0; i<2; i++)
+		for(int i = 0; i < 2; i++)
 		{
 			lb.get(i).setFont(Font.font
 					(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
@@ -79,16 +79,22 @@ public class SceneBasic extends SceneMain
 		}
 		//ボタンをVBoxに割り当てる
 		VBox vb = new VBox();
+		VBox vb2 = new VBox();
 		vb.setAlignment(Pos.CENTER);
-		vb.setPadding(new Insets(10, 10, 10, 10));
+		vb2.setAlignment(Pos.CENTER);
+		vb.setPadding(new Insets(0, 0, 0, 0));
+		vb2.setPadding(new Insets(0, 0, 0, 0));
 		vb.setSpacing(30);
+		vb2.setSpacing(10);
 		vb.getChildren().addAll(bt);
+		vb2.getChildren().addAll(SceneContents.subTitle("ホーム画面"), lb);
+		
+		vb.setTranslateY(-10);
 		//上部メッセージ作成
 		lb.setFont(Font.font(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
-		lb.setTranslateY(20);
 		//ペイン割り当て
 		bp.setCenter(vb);
-		bp.setTop(lb);
+		bp.setTop(vb2);
 		BorderPane.setAlignment(lb, Pos.CENTER);
 		//ボタンにイベント割り当て
 		event.transitionPreference(bt.get(0));
@@ -123,20 +129,24 @@ public class SceneBasic extends SceneMain
 		
 		//ボタンをVBoxに割り当てる
 		VBox vb = new VBox();
+		VBox vb2 = new VBox();
 		vb.setAlignment(Pos.CENTER);
-		vb.setPadding(new Insets(10, 10, 10, 10));
+		vb2.setAlignment(Pos.CENTER);
+		vb.setPadding(new Insets(0, 0, 0, 0));
+		vb2.setPadding(new Insets(0, 0, 0, 0));
 		vb.setSpacing(30);
+		vb2.setSpacing(10);
 		vb.getChildren().addAll(bt);
+		vb2.getChildren().addAll(SceneContents.subTitle("設定"), lb);
 		
-		vb.setTranslateY(30);
+		vb.setTranslateY(10);
 		bt.get(3).setTranslateX(-120);
 		
 		//上部メッセージ作成
 		lb.setFont(Font.font(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
-		lb.setTranslateY(20);
 		//ペイン割り当て
 		bp.setCenter(vb);
-		bp.setTop(lb);
+		bp.setTop(vb2);
 		BorderPane.setAlignment(lb, Pos.CENTER);
 		//ボタンにイベント割り当て
 		event.transitionGender(bt.get(0));

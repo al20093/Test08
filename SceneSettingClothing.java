@@ -6,6 +6,8 @@
 /**********************************************/
 package application;
 
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -106,6 +108,8 @@ public class SceneSettingClothing extends SceneMain{
 	 void createDelete()
 		{
 		 
+		 		
+		 
 		 		//イベントオブジェクト作成
 		 		EventSettingClothing event = new EventSettingClothing(this);
 		 		
@@ -120,10 +124,18 @@ public class SceneSettingClothing extends SceneMain{
 				
 				//lb = new Label("服装追加\n\n\n\n\n");
 				lv = new ListView<String>();
+			
+				//データ処理部より服装データを取得するメソッドを呼び出す
+				List<Clothes> clothes = new DataSettingClothing().getClothes();
 				
 				ObservableList<String> ol =
-						FXCollections.observableArrayList(
-								"上着A", "上着B", "帽子A", "帽子B");
+						FXCollections.observableArrayList();
+					for(int i = 0; i < clothes.size(); i++)
+					{
+						ol.add(clothes.get(i).name);  //Labelに服装名称を追加する
+					}
+				
+						
 				lv.setItems(ol);
 				
 				lv.setPrefWidth(200); //リストビューサイズ
@@ -163,7 +175,7 @@ public class SceneSettingClothing extends SceneMain{
 				
 				event.clickCancel(cancel);
 				event.clickAdd(add);
-				event.clickRegister2(register, lv);
+				event.clickRegister2(register, ol, lv);
 			}
 	/*public static void main(String[] args) {
 		launch(args);

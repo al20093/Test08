@@ -6,6 +6,7 @@
 /**********************************************/
 package application;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -43,6 +44,9 @@ public class EventSettingClothing
 			clothes.part = bodyTypeData.getText();
 			clothes.index = Double.parseDouble(clothingNumberData.getText());
 			
+			//データ処理部の書き込みメソッドを呼び出す
+			 new DataSettingClothing().addClothes(clothes);
+			
 			//確認用
 			System.out.println(clothes.name);
 			System.out.println(clothes.kind);
@@ -60,12 +64,22 @@ public class EventSettingClothing
 		}); 
 	}
 	
-	void clickRegister2(Button register, ListView<String> lv)
+	void clickRegister2(Button register, ObservableList<String> ol, ListView<String> lv)
 	{
 		register.setOnAction((ActionEvent) -> 
 		{
 			String deleteClothing;
+			String name;
 			deleteClothing = lv.getSelectionModel().getSelectedItem();
+			
+			//名前を取り出す
+			name = deleteClothing;
+			//データ処理部を呼び出す,消すアイテムをclotheにいれる
+			Clothes clothes = new DataSettingClothing().matching(name);
+			for(int i = 0; i < ol.size(); i++)
+			{
+				if(ol.get(i).equals(clothes.name)) ol.remove(i);
+			}
 			
 			//確認用
 			System.out.println(deleteClothing);

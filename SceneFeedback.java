@@ -35,8 +35,6 @@ class SceneFeedback extends SceneMain
 		//イベントオブジェクトの作成
 		EventFeedback event = new EventFeedback(this);
 		
-		
-		//List<RadioButton> rb = CreateRadioList("1","2","3","4","5","6","7","8","9","10","11"); //服装指数の選択式ラジオボタン"rb"
 		List<RadioButton> rb = new ArrayList<RadioButton>()
 		{
 			{
@@ -69,16 +67,26 @@ class SceneFeedback extends SceneMain
 		Label day = new Label("\n\n\n\n〇月〇日の評価"); //日付表示ラベル"day"
 		
 		
-		Label hat = new Label("帽子"); //帽子ラベル"hat"
+		//ラベル作成
+		List<Clothes> clothes = new DataFeedback().getList();
+		List<Label> label = new ArrayList<Label>()
+			{
+				{
+					for(int i = 0; i < clothes.size(); i++)
+					{
+						add(new Label(clothes.get(i).name));  //Labelに服装名称を追加する
+					}
+				}
+			};
+		
+		/*Label hat = new Label("帽子"); //帽子ラベル"hat"
 		Label hand = new Label("手袋"); //手袋ラベル"hand"
 		Label outerwear = new Label("上着"); //上着ラベル"outerwear"
 		Label pants = new Label("ズボン"); //ズボンラベル"pants"
-		Label socks = new Label("靴下"); //靴下ラベル"socks"
-		
-		
+		Label socks = new Label("靴下"); //靴下ラベル"socks"*/
 		
 		VBox vb_clothing = new VBox(); //帽子、手袋、上着、ズボン、靴下を垂直に塊にしたグループ"clothing"
-		vb_clothing.getChildren().addAll(hat, hand, outerwear, pants, socks);
+		vb_clothing.getChildren().addAll(label);
 		vb_clothing.setSpacing(20);
 		
 		
