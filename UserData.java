@@ -10,7 +10,8 @@ package application;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.*;
+import java.util.*;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -70,11 +71,11 @@ public class UserData
 		}
 	}
 	
-	ArrayList<Double> weightRead()
+	List<Double> weightRead()
 	{
 		JSONObject obj = new JSONObject();
 		JSONParser parser = new JSONParser();
-		ArrayList<Double> weightRead = new ArrayList<Double>();
+		List<Double> weightRead = new ArrayList<Double>();
 		try
 		{
 			FileReader reader = new FileReader("./data.json");
@@ -110,11 +111,11 @@ public class UserData
 		}
 	}
 	
-	ArrayList<Double> feedbackRead()
+	List<Double> feedbackRead()
 	{
 		JSONObject obj = new JSONObject();
 		JSONParser parser = new JSONParser();
-		ArrayList<Double> fbRead = new ArrayList<Double>();
+		List<Double> fbRead = new ArrayList<Double>();
 		try
 		{
 			FileReader reader = new FileReader("./data.json");
@@ -135,9 +136,72 @@ public class UserData
 		return fbRead;
 	}
 	
-
+	void clothesWrite(Clothes clothes) 
+	{
+		Connection con = null;
+		String dbFileUrl = "jdbc:sqlite:user.sqlite3";
+		String sql = "INSERT INTO TEST_TABLE VALUES (?, ?, ?, ?, ?)";
+		PreparedStatement prestmt;
+		try
+		{
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection(dbFileUrl);
+			prestmt = con.prepareStatement(sql);
+				prestmt.set
+				prestmt.set
+				prestmt.set
+				prestmt.set
+				prestmt.set
+				
+				prestmt.executeUpdate();
+				prestmt.close();
+				con.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	void clothesUpdate(Clothes clothes) 
+	{
+		
+	}
 	
+	void clothesDelete(Clothes clothes) 
+	{
+		
+	}
+	
+	List<Clothes> clothesRead()
+	{
+		List<Clothes> cRead = new ArrayList<Clothes>();
+		Connection con = null;
+		String dbFileUrl = "jdbc:sqlite:user.sqlite3";
+		try 
+		{
+			con = DriverManager.getConnection(dbFileUrl);
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM TEST_TABLE";
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) 
+			{
+				//cReadの処理 = rs.getString("id"); の形
+			}
+			stmt.close();
+			con.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return cRead;
+	}
+	
+	void createCList() 
+	{
+		
+	}
+	
+	List<Clothes> getCList()
+	{
+		
+	}
 }
-
 
 
