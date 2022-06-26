@@ -193,7 +193,7 @@ public class UserData
 	}
 	void clothesUpdate(Clothes clothes) 
 	{
-		String sql = "UPDATE TEST_TABLE SET name = ?, kind = ?, part = ?, index = ? WHERE id = ";
+		String sql = "UPDATE TEST_TABLE SET name = ?, kind = ?, part = ?, index = ? WHERE id = ?";
 		PreparedStatement prestmt;
 		try
 		{
