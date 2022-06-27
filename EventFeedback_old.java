@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 
 //イベント処理クラス
-class EventFeedback
+class EventFeedback_old
 {
 	SceneFeedback feedback;
 	
@@ -18,7 +18,7 @@ class EventFeedback
 	
 	int counter; //何回目かのカウント変数
 	
-	EventFeedback(SceneFeedback feedback)
+	EventFeedback_old(SceneFeedback feedback)
 	{
 		this.feedback = feedback;
 	}
@@ -41,7 +41,13 @@ class EventFeedback
 			counter++;
 			if(counter == size) 
 			{
-				new CreateAlert().complete("登録が完了しました。"); //登録完了アラート画面表示
+				boolean check = new CreateAlert().confirm("登録が完了しました。"); //登録完了アラート画面表示
+				if(check == true)
+				{
+					System.out.println("true");
+				} else {
+					System.out.println("false");
+				}
 			}
 			
 		});
