@@ -1,4 +1,3 @@
-
 /****************************************/ 
 /*author:西村美玖 6/27更新 
 /*C7:服装情報設定処理部所属 
@@ -11,9 +10,10 @@ package application;
 import java.util.List;
 import java.util.ArrayList;
 
-public class DataSettingClothing
+class DataSettingClothing
 {
-	new UserData().getCList() //インスタンスの生成
+	//new UserData().getCList(); //インスタンスの生成
+	
 	//-------------------------------------------- 
 	//List<Clothes> getClothes()
 	//ユーザ情報管理部から全ての服装データを取ってくる

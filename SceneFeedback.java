@@ -33,7 +33,7 @@ class SceneFeedback extends SceneMain
 	{
 		BorderPane bp = new BorderPane();
 		//イベントオブジェクトの作成
-		EventFeedback event = new EventFeedback(this);
+		EventFeedback_old event = new EventFeedback_old(this);
 		
 		/*List<RadioButton> rb = new ArrayList<RadioButton>()
 		{

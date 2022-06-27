@@ -14,7 +14,7 @@ class EventBasic {
 	void clickWindow()
 	{
 		basic.getScene().addEventHandler(MouseEvent.MOUSE_CLICKED, 
-			(MouseEvent) -> { basic.assignSceneToStage("home"); });
+			(MouseEvent) -> { basic.assignSceneToStage("gender"); });
 	}
 	
 	void transitionPreference(Button bt)
