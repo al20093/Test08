@@ -1,3 +1,4 @@
+
 /****************************************/ 
 /*author:西村美玖 6/27更新 
 /*C7:服装情報設定処理部所属 
@@ -12,9 +13,7 @@ import java.util.ArrayList;
 
 public class DataSettingClothing
 {
-	
 	new UserData().getCList() //インスタンスの生成
-	
 	//-------------------------------------------- 
 	//List<Clothes> getClothes()
 	//ユーザ情報管理部から全ての服装データを取ってくる
@@ -42,6 +41,7 @@ public class DataSettingClothing
 	//-------------------------------------------- 
 	//Clothes matching(String clothesName)
 	//リストビューで選択された服装名称と
+	//削除した服装情報をファイルから削除する
 	//--------------------------------------------
 	Clothes matching(String clothesName)
 	{

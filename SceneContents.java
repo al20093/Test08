@@ -19,34 +19,65 @@ import javafx.scene.text.Font;
 
 public class SceneContents
 {
-	//シーンマップ
+	//シーン情報を格納するマップ
 	static Map<String, Scene> sceneMap = new HashMap<String, Scene>();
 	
-	SceneContents()
+	//--------------------------------------------------
+	//Scene getSmap(String name)
+	//シーンマップからシーンを取得するメソッド
+	//sceneName:呼び出すシーンのマップキー
+	//sceneMap.get(sceneName):マップキーに対応するシーン
+	//--------------------------------------------------
+	static Scene getSmap(String sceneName)
 	{
+		return sceneMap.get(sceneName);
 	}
 	
-	static Scene getSmap(String name)
+	//-------------------------------------------------------------
+	//void createScene(SceneMain sceneMain)
+	//システムのすべてのシーンを作成するメソッド
+	//sceneMain:すべてのシーンのスーパークラスとなるSceneMainクラス
+	//-------------------------------------------------------------
+	static void createScene(SceneMain sceneMain)
 	{
-		return sceneMap.get(name);
-	}
-	
-	static void createScene(SceneMain sceneMain) {
 		SceneBasic initial = new SceneBasic(sceneMain.getStage());
 		SceneBasic home = new SceneBasic(sceneMain.getStage());
+		SceneBasic preference = new SceneBasic(sceneMain.getStage());
 		SceneFeedback feedback = new SceneFeedback(sceneMain.getStage());
 		SceneArea area = new SceneArea(sceneMain.getStage());
+		SceneArea proposal = new SceneArea(sceneMain.getStage());
+		SceneWeight weight = new SceneWeight(sceneMain.getStage());
+		SceneSettingClothing addition = new SceneSettingClothing(sceneMain.getStage());
+		SceneSettingClothing delete = new SceneSettingClothing(sceneMain.getStage());
 		
 		initial.createInitial();
 		home.createHome();
+		preference.createPreference();
 		feedback.createFeedback();
 		area.createArea();
+		proposal.createClothing();
+		weight.createWeight();
+		addition.createAddition();
+		delete.createDelete();
+		
 		sceneMap.put("initial", initial.getScene());
 		sceneMap.put("home", home.getScene());
+		sceneMap.put("preference", preference.getScene());
 		sceneMap.put("feedback", feedback.getScene());
 		sceneMap.put("area", area.getScene());
+		sceneMap.put("clothing", proposal.getScene());
+		sceneMap.put("weight", weight.getScene());
+		sceneMap.put("addition", addition.getScene());
+		sceneMap.put("delete", delete.getScene());
 	}
 	
+	//----------------------------------------------------------------------
+	//StackPane subTitle(String title)
+	//各シーンの左上に表示するサブタイトルを作成するメソッド
+	//sceneName:呼び出すシーンのマップキー
+	//StackPane:サブタイトルのペイン
+	//			サブペインとして他のペインに割り当てる
+	//----------------------------------------------------------------------
 	static StackPane subTitle(String title)
 	{
 		StackPane sp = new StackPane();
@@ -66,8 +97,9 @@ public class SceneContents
 		return sp;
 	}
 	
-	static void Lagrange(double x, double...pos)
+	static double Lagrange(double x, double...pos)
 	{
-		
-	}
+		double result = 0.0;
+		return result;
+ 	}
 }

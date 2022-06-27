@@ -18,7 +18,6 @@ public class DataFeedback {
 	List<Clothes> getList()
 	{
 		return new UserData().getCList(); //インスタンスの生成
-		
 	}
 	
 	

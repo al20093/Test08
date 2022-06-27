@@ -1,3 +1,9 @@
+/**********************************************/
+/*author:佐野　渉 6/25更新
+/*C2:基本画面処理部所属
+/*CreateAlert:
+/*アラートを表示するクラス
+/**********************************************/
 package application;
 
 import java.util.Optional;
@@ -7,6 +13,13 @@ import javafx.scene.control.ButtonType;
 
 public class CreateAlert
 {
+	//----------------------------------------------------------------
+	//void alertTypeA(String title, String text, Alert.AlertType type)
+	//OKのみを付属したアラートを作成するメソッド
+	//title:表示されるアラートウィンドウのタイトル
+	//text:ユーザに表示するメッセージ
+	//type:アラートに表示するアイコンのタイプ
+	//----------------------------------------------------------------
 	void alertTypeA(String title, String text, Alert.AlertType type)
 	{
 		Alert al = new Alert(type);

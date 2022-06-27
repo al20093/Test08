@@ -42,7 +42,6 @@ class EventFeedback
 			if(counter == size) 
 			{
 				new CreateAlert().complete("登録が完了しました。"); //登録完了アラート画面表示
-				
 			}
 			
 		});
