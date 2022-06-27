@@ -53,13 +53,8 @@ public class EventSettingClothing
 			System.out.println(clothes.part);
 			System.out.println(clothes.index);
 			
-			boolean check = new CreateAlert().confirm("登録が完了しました。"); //登録完了アラート画面表示
-			if(check == true)
-			{
-				System.out.println("true");
-			}else{
-				System.out.println("false");
-			}
+			new CreateAlert().complete("登録が完了しました。"); //登録完了アラート画面表示
+			
 			
 		}); 
 	}
@@ -84,13 +79,8 @@ public class EventSettingClothing
 			//確認用
 			System.out.println(deleteClothing);
 			
-			boolean check = new CreateAlert().confirm("削除が完了しました。"); //登録完了アラート画面表示
-			if(check == true)
-			{
-				System.out.println("true");
-			}else{
-				System.out.println("false");
-			}
+			new CreateAlert().complete("削除が完了しました。"); //登録完了アラート画面表示
+			
 			
 		}); 
 	}
@@ -98,7 +88,8 @@ public class EventSettingClothing
 	void clickDelete(Button delete)
 	{
 		delete.setOnAction((ActionEvent) ->
-		{settingclothing.assignSceneToStage("delete");}); //削除ボタンを押したらW9画面へ移動
+		{
+			settingclothing.assignSceneToStage("delete");}); //削除ボタンを押したらW9画面へ移動
 	}
 	
 	void clickAddition(Button add)

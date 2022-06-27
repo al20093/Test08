@@ -1,4 +1,3 @@
-
 /****************************************/ 
 /*author:西村美玖 6/24更新 
 /*C6:フィードバック処理部所属 
@@ -18,8 +17,7 @@ public class DataFeedback {
 	//--------------------------------------------
 	List<Clothes> getList()
 	{
-		return new UserData.getCList(); //インスタンスの生成
-		
+		return new UserData().getCList(); //インスタンスの生成
 	}
 	
 	
@@ -65,7 +63,6 @@ public class DataFeedback {
 		void writeUser(List<Clothes> clothes)
 		{
 			//書き込み命令
-			new UserData().();
+			new UserData().clothesUpdate(clothes);
 		}
 }
-

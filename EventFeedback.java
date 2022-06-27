@@ -41,13 +41,7 @@ class EventFeedback
 			counter++;
 			if(counter == size) 
 			{
-				boolean check = new CreateAlert().confirm("登録が完了しました。"); //登録完了アラート画面表示
-				if(check == true)
-				{
-					System.out.println("true");
-				} else {
-					System.out.println("false");
-				}
+				new CreateAlert().complete("登録が完了しました。"); //登録完了アラート画面表示
 			}
 			
 		});
