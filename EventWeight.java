@@ -36,11 +36,10 @@ public class EventWeight
 	{
 		bt.setOnAction((ActionEvent) ->
 		{ 	
-			List<Integer> wdata = new ArrayList<Integer>();
+			List<Double> wdata = new ArrayList<Double>();
 			int checkdata = 0;   //正しく入力されたデータの個数をチェック
 			for(int i = 0; i < chtf.size();++i)
 			{
-				char tmp;
 				boolean output = true;
 				String input = chtf.get(i).getText();  //inputにTextFieldの内容を入力
 				if(input == null || input.trim().isEmpty())   // inputが空の場合の処理
@@ -49,24 +48,32 @@ public class EventWeight
 					weight.assignSceneToStage("weight");
 					break;
 				}else{
-					for(int j = 0; j < input.length(); j++)  //入力されたinput長さの値まで繰り返す
+					//入力されたデータが数字かないかを判別
+					try 
 					{
-						tmp = input.charAt(j);      // 1文字ずつチェックするためchar型のtmpに入れる
-					
-						if(Character.isDigit(tmp)==false) //文字列が数字でない場合outputの値をfalseで設定
-						{
-							output = false;
-						}
+						Double.parseDouble(input);
+						output = true;
+					} catch(NumberFormatException e) {
+						output = false;
 					}
-					if(output == true) //入力されたinputが数字の場合、outputの値がtrueのため以下の処理を行う
+					//入力されたinputが数字の場合、outputの値がtrueのため以下の処理を行う
+					if(output == true)
 					{
-						int k = Integer.parseInt(chtf.get(i).getText());
-						if(k >= 1 && k <= 11) //入力された数字が1から11の範囲だったらListのwdataに値を入れる
+						if(input.length() <= 3)
 						{
-							wdata.add(k);
-							checkdata++;
+							double k = Double.parseDouble(chtf.get(i).getText());
+							//入力された数字が1から11の範囲だったらListのwdataに値を入れる
+							if(k >= 1 && k <= 11)
+							{
+								wdata.add(k);
+								checkdata++;
+							} else {
+								new CreateAlert().failure("1から11までの数字を入力してください。");
+								weight.assignSceneToStage("weight");
+								break;
+							}
 						} else {
-							new CreateAlert().failure("1から11までの数字を入力してください。");
+							new CreateAlert().failure("3文字以内で入力してください。");
 							weight.assignSceneToStage("weight");
 							break;
 						}
