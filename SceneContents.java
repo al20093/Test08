@@ -43,6 +43,7 @@ public class SceneContents
 		SceneBasic initial = new SceneBasic(sceneMain.getStage());
 		SceneBasic home = new SceneBasic(sceneMain.getStage());
 		SceneBasic preference = new SceneBasic(sceneMain.getStage());
+		SceneGender gender = new SceneGender(sceneMain.getStage());
 		SceneFeedback feedback = new SceneFeedback(sceneMain.getStage());
 		SceneArea area = new SceneArea(sceneMain.getStage());
 		SceneArea proposal = new SceneArea(sceneMain.getStage());
@@ -53,6 +54,7 @@ public class SceneContents
 		initial.createInitial();
 		home.createHome();
 		preference.createPreference();
+		gender.createGender();
 		feedback.createFeedback();
 		area.createArea();
 		proposal.createClothing();
@@ -63,6 +65,7 @@ public class SceneContents
 		sceneMap.put("initial", initial.getScene());
 		sceneMap.put("home", home.getScene());
 		sceneMap.put("preference", preference.getScene());
+		sceneMap.put("gender", gender.getScene());
 		sceneMap.put("feedback", feedback.getScene());
 		sceneMap.put("area", area.getScene());
 		sceneMap.put("clothing", proposal.getScene());
@@ -97,9 +100,26 @@ public class SceneContents
 		return sp;
 	}
 	
+	//-------------------------------------------- 
+	//static double Lagrange(double x, double...pos)
+	//ラグランジュ補完を行う 
+	//x:ラグランジュの補間公式に代入する値 pos:通る点のx座標とy座標を交互に入れる 
+	//--------------------------------------------
 	static double Lagrange(double x, double...pos)
 	{
-		double result = 0.0;
-		return result;
- 	}
+		double sum = 0; //求めた値を足していく変数
+        for (int i = 1; i < pos.length; i += 2)
+        {
+            double y = pos[i]; //y座標
+            for (int j = 0; j < pos.length; j += 2)
+            {
+                if ( (j + 1) != i)
+                {
+                    y *= (x - pos[j]) / (pos[i - 1] - pos[j]);
+                }
+            }
+            sum += y;
+        }
+        return sum;
+	}
 }

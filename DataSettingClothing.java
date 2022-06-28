@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 class DataSettingClothing
-{
-	//new UserData().getCList(); //インスタンスの生成
-	
+{	
 	//-------------------------------------------- 
 	//List<Clothes> getClothes()
 	//ユーザ情報管理部から全ての服装データを取ってくる
@@ -22,7 +20,7 @@ class DataSettingClothing
 	{
 		List<Clothes> clothes;
 		//取得する
-		clothes = new UserData().getCList();
+		clothes = new UserData().clothesRead();
 		return clothes;
 	}
 	
@@ -34,7 +32,7 @@ class DataSettingClothing
 	void addClothes(Clothes clothes)
 	{
 		//ユーザ情報処理部の書き込むメソッドを呼び出す
-		UserData().clothesWrite(clothes);
+		new UserData().clothesWrite(clothes);
 	}
 	
 	
@@ -45,14 +43,14 @@ class DataSettingClothing
 	//--------------------------------------------
 	Clothes matching(String clothesName)
 	{
-		Clothes clothes;
+		Clothes clothes = new Clothes();
 		List<Clothes> allClothes = getClothes();
 		//全ての服装データnameに会うデータを持ってくる
 		for(int i = 0; i < allClothes.size(); i++ )
 		{
-			if(clothesName == allClothes[i].name)
+			if(clothesName == allClothes.get(i).name)
 				{
-					clothes = allClothes[i];
+					clothes = allClothes.get(i);
 					break;
 				}
 		}
@@ -63,8 +61,8 @@ class DataSettingClothing
 	//void deleteClothes(String clothes)
 	//削除した服装情報をファイルから削除する
 	//--------------------------------------------
-	void deleteClothes(String clothes)
+	void deleteClothes(Clothes clothes)
 	{
-		UserData().clothesDelete(clothes);
+		new UserData().clothesDelete(clothes);
 	}
 }

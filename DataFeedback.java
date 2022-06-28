@@ -1,5 +1,6 @@
 /****************************************/ 
 /*author:西村美玖 6/24更新 
+/* 		 佐野　渉 6/28更新
 /*C6:フィードバック処理部所属 
 /*DataFeedback: 
 /*フィードバック処理部でのデータ処理を記述する
@@ -7,6 +8,7 @@
 
 package application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataFeedback
@@ -22,17 +24,18 @@ public class DataFeedback
 	
 	
 	//-------------------------------------------- 
-	//double getWeight(int value)
-	//重みをラグランジュ補完から取得する
+	//double getWeight(List<Integer> value)
+	//重みをラグランジュ補完により変換する
 	//--------------------------------------------
-	double[] getWeight(int value[])
+	List<Double> getWeight(List<Integer> value)
 	{
 		
-		double weightClothes[] = {};
+		List<Double> weightClothes = new ArrayList<Double>();
 		//ラグランジュ補完を呼び出す
 		for(int i = 0; i < 5; i++)
 		{
-			weightClothes[i] = SceneContents.Lagrange(value[i], 1, 0.5, 6, 1, 11, 2);
+			weightClothes.add(SceneContents.Lagrange(value.get(i)
+					, 1, Constant.WEIGHTRANGE[0], 6, 1, 11, Constant.WEIGHTRANGE[1]));
 		}
 		
 		return weightClothes;
@@ -43,14 +46,15 @@ public class DataFeedback
 	//List<Clothes> calculateFeedback(double weightClothes[])
 	//重みとフィードバック数値をかけ合わせる
 	//--------------------------------------------
-	List<Clothes> calculateFeedback(double weightClothes[])
+	List<Clothes> calculateFeedback(List<Double> weightClothes)
 	{
 		//ユーザ情報管理部から服装データリストをとってくる
 		List<Clothes> clothes = getList();
 		
 		for(int i = 0; i < 5; i++)
 		{
-			clothes.get(i).index = clothes.get(i).index * weightClothes[i];
+			clothes.get(i).index = clothes.get(i).index * weightClothes.get(i);
+			clothes.set(i, clothes.get(i));
 		}
 		return clothes;
 	}
@@ -63,6 +67,15 @@ public class DataFeedback
 	void writeUser(List<Clothes> clothes)
 	{
 		//書き込み命令
-		new UserData().clothesUpdate(clothes);
+		for(int i = 0; i < clothes.size(); ++i)
+		{
+			new UserData().clothesUpdate(clothes.get(i));
+		}
+	}
+	
+	void flagReset()
+	{
+		//フィードバックフラグをfalseに戻す
+		new UserData().flagWrite(true);
 	}
 }

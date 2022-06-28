@@ -23,26 +23,27 @@ public class EventWeight
 		this.weight = weight;
 	}
 	
-	void weightCancel(Button bt)
+	void clickCancel(Button bt)
 	{
 		bt.setOnAction((ActionEvent) ->
-		{ weight.assignSceneToStage("preference"); });
+		{ 
+			new CreateAlert().confirm(Constant.CANCELMESSAGE);
+			weight.assignSceneToStage("preference"); 
+		});
 	}
 	
-	void weightSave(Button bt, List<TextField> chtf)
+	void clickRegister(Button bt, List<TextField> chtf)
 	{
 		bt.setOnAction((ActionEvent) ->
 		{ 	
-			List<Double> wdata = new ArrayList<Double>();
+			List<Integer> wdata = new ArrayList<Integer>();
 			for(int i = 0; i < chtf.size();++i)
 			{
-				wdata.add(Double.parseDouble(chtf.get(i).getText()));
+				wdata.add(Integer.parseInt(chtf.get(i).getText()));
 			}
-			
-			System.out.println(wdata);
-			UserData uData = new UserData();
-			uData.weightWrite(wdata);
+			new DataWeight().weightSave(wdata);
+			new CreateAlert().complete("重みの登録が完了しました。");
+			weight.assignSceneToStage("preference");
 		});
 	}
-
 }

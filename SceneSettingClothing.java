@@ -174,12 +174,16 @@ public class SceneSettingClothing extends SceneMain {
 		
 		ObservableList<String> ol =
 				FXCollections.observableArrayList();
+		//すべての服装データをDBからとってくる
+		List<Clothes> clothes = new DataSettingClothing().getClothes();
 		//for(int i = 0; i < clothes.size(); i++)
 		//{
 		//	ol.add(clothes.get(i).name);  //Labelに服装名称を追加する
 		//}
-		
-		ol.add("上着A");
+		for(int i = 0; i < clothes.size(); ++i)
+		{
+			ol.add(clothes.get(i).name);
+		}
 	
 		lv.setItems(ol);	
 		

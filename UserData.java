@@ -65,6 +65,8 @@ class UserData
 		jsonObj.put("gender", Constant.GENDER);
 		//重み
 		jsonObj.put("weight", Constant.WEIGHT);
+		//フィードバックフラグ
+		jsonObj.put("flag", false);
 		//服装データ
 		clothesReset(); //DBテーブル初期化
 		for(int i = 0; i < Constant.CLOTHES.size(); ++i)
@@ -72,7 +74,7 @@ class UserData
 			clothesWrite(Constant.CLOTHES.get(i));
 		}
 		//既起動に変更
-		//jsonObj.put("boot", true);
+		jsonObj.put("boot", true);
 		//JSON書き込み
 		jsonWrite();
 	}
@@ -134,6 +136,31 @@ class UserData
 			}
 		}
 		return result;
+	}
+
+	//---------------------------------------------------
+	//void flagWrite(boolean flag)
+	//フィードバックを行ったかを示すフィードバックフラグ
+	//をJSONファイルに書き込むメソッド
+	//flag:書き込むフィードバックフラグの状態
+	//	   false:フィードバック不可
+	//	   true:フィードバック可能
+	//---------------------------------------------------
+	void flagWrite(boolean flag)
+	{
+		jsonObj.put("flag", flag);
+		jsonWrite();
+	}
+	
+	//---------------------------------------------------
+	//void flagRead()
+	//フィードバックを行ったかを示すフィードバックフラグ
+	//をJSONファイルから読み込むメソッド
+	//boolean:読み込んだフィードバックフラグの状態
+	//---------------------------------------------------
+	boolean flagRead()
+	{
+		return (boolean)jsonRead().get("flag");
 	}
 	
 	void genderWrite(boolean gender)

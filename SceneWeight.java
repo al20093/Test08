@@ -110,9 +110,8 @@ class SceneWeight extends SceneMain
 			bp.setCenter(gptf);
 			bp.setBottom(chbox);
 			
-			event.weightCancel(button.get(0));
-			event.weightCancel(button.get(1));
-			event.weightSave(button.get(1), chtf);
+			event.clickCancel(button.get(0));
+			event.clickRegister(button.get(1), chtf);
 
 			this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}

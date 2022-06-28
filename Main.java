@@ -7,21 +7,18 @@
 /**********************************************/
 package application;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	
 	public void start(Stage primaryStage) {
+		//DBとの接続
+		UserData.getConnection();
 		//シーンのスーパークラス作成
 		SceneMain sceneMain = new SceneMain(primaryStage);
 		//他すべてのシーンを作成する
 		SceneContents.createScene(sceneMain);
-		//DBとの接続
-		UserData.getConnection();
 		//初起動のチェック
 		if(Constant.FIRSTBOOT)
 		{
@@ -33,17 +30,6 @@ public class Main extends Application {
 			//デフォルト設定を行う
 			new UserData().defaultWrite();
 		}
-		/*List<Double> feedback = new ArrayList()
-		{
-			{
-				add(24.2);
-				add(12.1);
-				add(21.4);
-				add(32.5);
-				add(8.9);
-			}
-		};
-		new UserData().feedbackWrite(feedback);*/
 	}
 	
 	public static void main(String[] args) {

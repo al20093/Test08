@@ -25,7 +25,7 @@ public class CreateAlert
 		Alert al = new Alert(type);
 		al.setTitle(title);
 		al.getDialogPane().setHeaderText(text);
-		al.show();
+		al.showAndWait();
 	}
 	
 	boolean alertTypeB(String title, String text, Alert.AlertType type)

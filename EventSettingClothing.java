@@ -15,17 +15,17 @@ import javafx.scene.control.TextField;
 
 public class EventSettingClothing 
 {
-	SceneSettingClothing settingclothing;
+	SceneSettingClothing settingClothing;
 	
 	EventSettingClothing(SceneSettingClothing settingclothing)
 	{
-		this.settingclothing = settingclothing;
+		this.settingClothing = settingclothing;
 	}
 	
 	void clickCancel(Button cancel)
 	{
 		cancel.setOnAction((ActionEvent) ->
-		{settingclothing.assignSceneToStage("preference");}); //キャンセルボタンを押したらW10画面へ遷移
+		{ settingClothing.assignSceneToStage("preference"); }); //キャンセルボタンを押したらW10画面へ遷移
 	}
 	
 	void clickRegister1(Button register, List<TextField> tf)
@@ -53,14 +53,9 @@ public class EventSettingClothing
 			System.out.println(clothes.part);
 			System.out.println(clothes.index);
 			
-			boolean check = new CreateAlert().confirm("登録が完了しました。"); //登録完了アラート画面表示
-			if(check == true)
-			{
-				System.out.println("true");
-			}else{
-				System.out.println("false");
-			}
-			
+			//登録完了アラート画面表示
+			new DataSettingClothing().addClothes(clothes);
+			new CreateAlert().complete(Constant.REGISTERMESSAGE);
 		}); 
 	}
 	
@@ -74,7 +69,7 @@ public class EventSettingClothing
 			
 			//名前を取り出す
 			name = deleteClothing;
-			//データ処理部を呼び出す,消すアイテムをclotheにいれる
+			//データ処理部を呼び出す,消すアイテムをclothesにいれる
 			Clothes clothes = new DataSettingClothing().matching(name);
 			for(int i = 0; i < ol.size(); i++)
 			{
@@ -84,7 +79,7 @@ public class EventSettingClothing
 			//確認用
 			System.out.println(deleteClothing);
 			
-			boolean check = new CreateAlert().confirm("削除が完了しました。"); //登録完了アラート画面表示
+			boolean check = new CreateAlert().confirm(Constant.DELETEMESSAGE); //登録完了アラート画面表示
 			if(check == true)
 			{
 				System.out.println("true");
@@ -98,13 +93,13 @@ public class EventSettingClothing
 	void clickDelete(Button delete)
 	{
 		delete.setOnAction((ActionEvent) ->
-		{settingclothing.assignSceneToStage("delete");}); //削除ボタンを押したらW9画面へ移動
+		{settingClothing.assignSceneToStage("delete");}); //削除ボタンを押したらW9画面へ移動
 	}
 	
 	void clickAddition(Button add)
 	{
 		add.setOnAction((ActionEvent) ->
-		{settingclothing.assignSceneToStage("addition");}); //追加ボタンを押したらW9画面へ移動
+		{settingClothing.assignSceneToStage("addition");}); //追加ボタンを押したらW9画面へ移動
 	}
 }
 

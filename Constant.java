@@ -1,5 +1,5 @@
 /**********************************************/
-/*author:佐野　渉 6/18更新
+/*author:佐野　渉 6/28更新
 /*C1:UI処理部所属
 /*Constant:
 /*定数の宣言をするメソッド
@@ -64,5 +64,18 @@ public class Constant {
 	//DBのテーブル名
 	final static String TABLENAME1 = "clothes";
 	final static String TABLENAME2 = "clist";
+	//WebのURL
+	final static String WEBURL = "https://tenki.jp/";
+	//重みの範囲
+	final static double[] WEIGHTRANGE = {0.5, 2.0};
+	//アラート画面に表示するメッセージ
+	//キャンセル時メッセージ
+	final static String CANCELMESSAGE = "本当に戻りますか？";
+	//登録時メッセージ
+	final static String REGISTERMESSAGE = "登録が完了しました。";
+	//削除時メッセージ
+	final static String DELETEMESSAGE = "削除が完了しました。";
+	//フィードバックフラグfalse時メッセージ
+	final static String FLAGMESSAGE = "フィードバックは服装提案後に行うことができます。";
 	//ここまで------------------------------------------------
 }
