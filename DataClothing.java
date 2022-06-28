@@ -1,3 +1,4 @@
+
 /****************************************/ 
 /*author:名久井愛紗 6/28更新 
 /*C5:服装提案部所属 
@@ -7,9 +8,13 @@
 
 package application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataClothing {
+	
+	
+	static List<Clothes> resultClothes;
 	
 	//-------------------------------------------- 
 	//String[] getWeather() 
@@ -142,6 +147,8 @@ public class DataClothing {
 			
 		}
 		
+		resultClothes = result;
+		
 		return result;
 	}
 	
@@ -175,7 +182,7 @@ public class DataClothing {
 	//--------------------------------------------
 	void orderList(List<Clothes> clothes)
 	{
-		new UserData().getCList(); //服装データリスト取得
+		new UserData().createCList(clothes); //服装データリスト取得
 	}
 	
 	
@@ -196,5 +203,14 @@ public class DataClothing {
 		return index;
 	}
 	
-
+	List<String> getResult()
+	{
+		
+		List<String> resultName = new ArrayList<String>();
+		for(int i=0;i<resultClothes.size(); i++) {
+			resultName.add(resultClothes.get(i).name);
+		}
+		return resultName;
+		
+	}
 }
