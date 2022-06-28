@@ -6,11 +6,10 @@
 /**********************************************/
 package application;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -174,17 +172,22 @@ public class SceneSettingClothing extends SceneMain {
 		
 		ObservableList<String> ol =
 				FXCollections.observableArrayList();
+		//すべての服装データをDBからとってくる
+		List<Clothes> clothes = new DataSettingClothing().getClothes();
 		//for(int i = 0; i < clothes.size(); i++)
 		//{
 		//	ol.add(clothes.get(i).name);  //Labelに服装名称を追加する
 		//}
-		
-		ol.add("上着A");
+		for(int i = 0; i < clothes.size(); ++i)
+		{
+			ol.add(clothes.get(i).name);
+		}
 	
 		lv.setItems(ol);	
 		
 		event.clickCancel(button.get(0));
 		event.clickAddition(addition);
+		event.clickRegister2(button.get(1),  ol,  lv);
 		
 		//ペイン割り当て
 		bp.setTop(vb_top);

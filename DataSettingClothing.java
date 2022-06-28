@@ -1,4 +1,3 @@
-
 /****************************************/ 
 /*author:西村美玖 6/27更新 
 /*C7:服装情報設定処理部所属 
@@ -9,11 +8,9 @@
 package application;
 
 import java.util.List;
-import java.util.ArrayList;
 
-public class DataSettingClothing
-{
-	new UserData().getCList() //インスタンスの生成
+class DataSettingClothing
+{	
 	//-------------------------------------------- 
 	//List<Clothes> getClothes()
 	//ユーザ情報管理部から全ての服装データを取ってくる
@@ -22,7 +19,7 @@ public class DataSettingClothing
 	{
 		List<Clothes> clothes;
 		//取得する
-		clothes = new UserData().getCList();
+		clothes = new UserData().clothesRead();
 		return clothes;
 	}
 	
@@ -34,7 +31,7 @@ public class DataSettingClothing
 	void addClothes(Clothes clothes)
 	{
 		//ユーザ情報処理部の書き込むメソッドを呼び出す
-		UserData().clothesWrite(clothes);
+		new UserData().clothesWrite(clothes);
 	}
 	
 	
@@ -45,14 +42,14 @@ public class DataSettingClothing
 	//--------------------------------------------
 	Clothes matching(String clothesName)
 	{
-		Clothes clothes;
+		Clothes clothes = new Clothes();
 		List<Clothes> allClothes = getClothes();
 		//全ての服装データnameに会うデータを持ってくる
 		for(int i = 0; i < allClothes.size(); i++ )
 		{
-			if(clothesName == allClothes[i].name)
+			if(clothesName.equals(allClothes.get(i).name))
 				{
-					clothes = allClothes[i];
+					clothes = allClothes.get(i);
 					break;
 				}
 		}
@@ -63,8 +60,8 @@ public class DataSettingClothing
 	//void deleteClothes(String clothes)
 	//削除した服装情報をファイルから削除する
 	//--------------------------------------------
-	void deleteClothes(String clothes)
+	void deleteClothes(Clothes clothes)
 	{
-		UserData().clothesDelete(clothes);
+		new UserData().clothesDelete(clothes);
 	}
 }
