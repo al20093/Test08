@@ -1,6 +1,6 @@
 
 /****************************************/ 
-/*author:名久井愛紗 6/19更新 
+/*author:名久井愛紗 6/28更新 
 /*C5:服装提案部所属 
 /*DataClothing: 
 /*服装提案部でのデータ処理を記述する
@@ -8,17 +8,22 @@
 
 package application;
 
+import java.util.List;
+
 public class DataClothing {
 	
 	//-------------------------------------------- 
 	//String[] getWeather() 
 	////天気情報要求
 	//--------------------------------------------
-	String[] getWeather()
+	double[] getWeather(String area)
 	{
-		String weatherData;
-		weatherData = //web情報管理部を呼び出す
-		return weatherData;
+		ControlWeb web = new ControlWeb(area);	
+		double[] getweather;
+		getweather[0] = web.aveTemp();
+		getweather[1] = web.humidity();
+		getweather[2] = web.Weather();
+		return getweather;
 	}
 	
 	
@@ -27,91 +32,89 @@ public class DataClothing {
 	////服装データ要求
 	//index:服装指数
 	//--------------------------------------------
-	List<Clothes> getClothes(double[] index)
+	List<Clothes> getClothes(String area)
 	{
+		UserData user = new UserData();
+		List<Clothes> clothes = new UserData().clothesRead();
+		
+		
+		double[] weatherdata = getWeather(area);
+		double[] index = calculateIndex(weatherdata[0], weatherdata[1], weatherdata[2], getWeight());
+		
+		
 		List<Clothes> result; //５つ
-		List<Clothes> user; //ユーザ情報管理部 100個
-		List<Clothes> clothes;
-		clothes = new ～();
-		//マッチング
-	
 		
-		if(user.kind == "頭")
-		{
+		
+		List<Clothes> tclothes; 
+		for(int x=0; x<5; x++) {
+			for(int i=0; i<clothes.size(); i++) {
+				tclothes = clothes.get(i).kind=="頭";
+			}
 			double min = 99;
-			double sum =0;
-			for(int i=0; i<user.size(); i++) {
-				sum = (user.index - index[0]) * (user.index - index[0]);
+			double sum = 0;
+			for(int i=0; i<clothes.size(); i++) {
+				sum = (tclothes.get(i).index - index[0]) * (tclothes.get(i).index - index[0]);
 				if(min>sum) {
 					min = sum;
-					clothes = user;
+					result = tclothes;
 				}
 			}
 			
-		}
-		
+			for(int i=0; i<clothes.size(); i++) {
+				tclothes = clothes.get(i).kind=="手";
+			}
+			double min1 = 99;
+			double sum1 = 0;
+			for(int i=0; i<clothes.size(); i++) {
+				sum1 = (tclothes.get(i).index - index[1]) * (tclothes.get(i).index - index[1]);
+				if(min1>sum1) {
+					min1 = sum1;
+					result = tclothes;
+				}
+			}
 
-		if(user.kind == "手")
-		{
-			double min = 99;
-			double sum =0;
-			for(int i=0; i<user.size(); i++) {
-				sum = (user.index - index[1]) * (user.index - index[1]);
-				if(min>sum) {
-					min = sum;
-					clothes = user;
+			for(int i=0; i<clothes.size(); i++) {
+				tclothes = clothes.get(i).kind=="上半身";
+			}
+			double min2 = 99;
+			double sum2 = 0;
+			for(int i=0; i<clothes.size(); i++) {
+				sum2 = (tclothes.get(i).index - index[2]) * (tclothes.get(i).index - index[2]);
+				if(min2>sum2) {
+					min2 = sum2;
+					result = tclothes;
 				}
 			}
 			
-		}
-		
 
-		if(user.kind == "上半身")
-		{
-			double min = 99;
-			double sum =0;
-			for(int i=0; i<user.size(); i++) {
-				sum = (user.index - index[2]) * (user.index - index[2]);
-				if(min>sum) {
-					min = sum;
-					clothes = user;
+			for(int i=0; i<clothes.size(); i++) {
+				tclothes = clothes.get(i).kind=="下半身";
+			}
+			double min3 = 99;
+			double sum3 = 0;
+			for(int i=0; i<clothes.size(); i++) {
+				sum3 = (tclothes.get(i).index - index[3]) * (tclothes.get(i).index - index[3]);
+				if(min3>sum3) {
+					min3 = sum3;
+					result = tclothes;
 				}
 			}
-			
-		}
-		
 
-		if(user.kind == "下半身")
-		{
-			double min = 99;
-			double sum =0;
-			for(int i=0; i<user.size(); i++) {
-				sum = (user.index - index[3]) * (user.index - index[3]);
-				if(min>sum) {
-					min = sum;
-					clothes = user;
+			for(int i=0; i<clothes.size(); i++) {
+				tclothes = clothes.get(i).kind=="足";
+			}
+			double min4 = 99;
+			double sum4 = 0;
+			for(int i=0; i<clothes.size(); i++) {
+				sum4 = (tclothes.get(i).index - index[4]) * (tclothes.get(i).index - index[4]);
+				if(min4>sum4) {
+					min4 = sum4;
+					result = tclothes;
 				}
 			}
 			
 		}
 		
-
-		if(user.kind == "足")
-		{
-			double min = 99;
-			double sum =0;
-			for(int i=0; i<user.size(); i++) {
-				sum = (user.index - index[4]) * (user.index - index[4]);
-				if(min>sum) {
-					min = sum;
-					clothes = user;
-				}
-			}
-			
-		}
-		
-		result = clothes;
-		//5個
 		return result;
 	}
 	
@@ -122,20 +125,20 @@ public class DataClothing {
 	//--------------------------------------------
 	boolean getGender()
 	{
-		boolean gender;
-		gender = //ユーザ情報管理部
-		return gender;
+		return new UserData().genderRead();
 	}
 	
 	
 	//-------------------------------------------- 
 	//double[] getWeight()
-	////フィードバックの重み要求
+	////部位とフィードバックの重み要求
 	//--------------------------------------------
-	double[] getWeight()
+	List<Double> getWeight()
 	{
-		return //ユーザ情報管理部
+		return new UserData().weightRead();
 	}
+	
+	
 	
 
 	//-------------------------------------------- 
@@ -145,7 +148,7 @@ public class DataClothing {
 	//--------------------------------------------
 	void orderList(List<Clothes> clothes)
 	{
-		//ユーザ情報管理部（new ～();）
+		new UserData().getCList(); //服装データリスト取得
 	}
 	
 	
@@ -154,14 +157,14 @@ public class DataClothing {
 	////服装指数計算
 	//tem:気温 humidity:湿度 weather:天気 partweight:各部位の重み feedbackweight:フィードバックの重み
 	//--------------------------------------------
-	double[] calculateIndex(int tem, int humidity, String weather, double[] partweight, double feedbackweight)
+	double[] calculateIndex(double tem, double humidity, double weather, double[] getWeight)
 	{
-		double[] index;
+		double[] index = {};
 		//計算
-		tem 気温
-		index 服装指数
-		index = 0.53tem - 5.1	
-		return index
+		for(int i=0; i<5; i++) {
+		index[i] = SceneContents.Lagrange( tem, humidity, weather, getWeight[i]);
+		}
+		return index;
 	}
 	
 	
@@ -172,12 +175,8 @@ public class DataClothing {
 	void getClothes()
 	{
 		List<Clothes> result;
-		result = orderList()
-		return result;
+		result = orderList(clothes);
 	}
-
-
-
 	
 
 }
