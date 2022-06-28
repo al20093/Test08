@@ -22,11 +22,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-class SceneArea extends SceneMain
+class SceneProposal extends SceneMain
 {
 	Scene scene;
 	
-	SceneArea(Stage stage)
+	SceneProposal(Stage stage)
 	{
 		super(stage);
 	}
@@ -34,7 +34,7 @@ class SceneArea extends SceneMain
 	void createArea()
 	{
 		BorderPane bp = new BorderPane();
-		EventArea event = new EventArea(this);
+		EventProposal event = new EventProposal(this);
 		//ラベルリスト作成
 		List<Label> lb = new ArrayList<Label>();
 		List<Label> lb2 = new ArrayList<Label>();
@@ -111,7 +111,7 @@ class SceneArea extends SceneMain
 		scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
 	
-	void createClothing()
+	void createProposal()
 	{
 		 BorderPane bp = new BorderPane();
 		//ラベルリスト作成

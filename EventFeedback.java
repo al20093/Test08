@@ -12,13 +12,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.paint.Color;
 
 //イベント処理クラス
 class EventFeedback
 {
 	SceneFeedback feedback;
 	
+	Integer tempValue;
 	List<Integer> radioValue = new ArrayList<Integer>(); //指数を格納する変数
 	
 	int counter; //何回目かのカウント変数
@@ -37,28 +40,34 @@ class EventFeedback
 		}); //キャンセルボタンを押したらW4画面へ遷移
 	}
 	
-	void clickRegister(Button register, int size)
+	void clickRegister(Button register, int size, List<Label> labelList)
 	{
 		
 		register.setOnAction((ActionEvent) ->
-		{
-			/*
-			Clothes clothes = new Clothes();
-			
-			System.out.println(radioValue);
-			clothes.index = radioValue; //フィードバック指数はclothesリストの服装指数に格納?ラグランジュ関数に渡す別の変数?
-			*/
-			//確認用
-			System.out.println(radioValue);
-			
-			counter++;
+		{	
+			if(tempValue == null)
+			{
+				new CreateAlert().failure(Constant.EMPTYRADIOERROR);
+				return;
+			} else {
+				counter++;
+				radioValue.add(tempValue);	
+			}
+				
 			if(counter == size) 
 			{
+				labelList.get(counter - 2).setTextFill(Color.BLACK);
 				DataFeedback df = new DataFeedback();
 				df.writeUser(df.calculateFeedback(df.getWeight(radioValue)));
 				new CreateAlert().complete(Constant.REGISTERMESSAGE); //登録完了アラート画面表示
 				df.flagReset();
 				feedback.assignSceneToStage("home");
+			} else {
+				labelList.get(counter - 1).setTextFill(Color.RED);
+				if(1 < counter)
+				{
+					labelList.get(counter - 2).setTextFill(Color.BLACK);
+				}
 			}
 			
 		});
@@ -70,7 +79,7 @@ class EventFeedback
 	{
 		rb.setOnAction((ActionEvent) ->
 		{
-			radioValue.add(Integer.parseInt(rb.getText()));
+			tempValue = Integer.parseInt(rb.getText());			
 		});
 	}
 }

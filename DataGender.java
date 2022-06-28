@@ -22,4 +22,10 @@ public class DataGender
 		boolean gender = false; //性別情報
 		new UserData().genderWrite(gender);
 	}
+	
+	//初期起動状態を取得する
+	boolean getBoot()
+	{
+		return new UserData().checkBoot();
+	}
 }

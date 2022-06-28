@@ -21,4 +21,16 @@ class DataWeight {
 		}
 		new UserData().weightWrite(weight);
 	}
+	
+	//初期起動状態を取得する
+	boolean getBoot()
+	{
+		return new UserData().checkBoot();
+	}
+	
+	//既起動にする
+	void onBoot()
+	{
+		new UserData().writeBoot(true);
+	}
 }

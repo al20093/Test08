@@ -28,7 +28,7 @@ public class EventGender
 		{ 
 			new CreateAlert().complete("登録完了");
 			new DataGender().dataMan();
-			gender.assignSceneToStage("preference");
+			transaction();
 		});
 		
 	}
@@ -44,9 +44,24 @@ public class EventGender
 		{ 
 			new CreateAlert().complete(Constant.REGISTERMESSAGE);
 			new DataGender().dataWoman();
-			gender.assignSceneToStage("preference");
+			transaction();
 		});
 		
+	}
+	
+	//-------------------------------------------- 
+	//void selectionWoman(Button bt) 
+	//画面遷移を行うメソッド
+	//初期起動かどうかによる分岐を行う
+	//--------------------------------------------
+	void transaction()
+	{
+		if(new DataGender().getBoot())
+		{
+			gender.assignSceneToStage("preference");
+		} else {
+			gender.assignSceneToStage("weight");
+		}
 	}
 	
 	//-------------------------------------------- 
@@ -61,7 +76,12 @@ public class EventGender
 			boolean check = new CreateAlert().confirm(Constant.CANCELMESSAGE);
 			if(check == true)
 			{
-				gender.assignSceneToStage("preference");
+				if(new DataGender().getBoot())
+				{
+					gender.assignSceneToStage("preference");
+				} else {
+					gender.assignSceneToStage("initial");
+				}
 			}
 		});
 	}

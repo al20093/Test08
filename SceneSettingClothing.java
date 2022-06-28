@@ -1,5 +1,6 @@
 /**********************************************/
 /*author:西村　美玖 6/21更新
+/*		 佐野　渉 6/28更新
 /*C7:服装設定処理部所属
 /*SceneSettingClothing:
 /*服装設定モードの際に表示する画面を作成したクラス
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,8 +26,12 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class SceneSettingClothing extends SceneMain {
-	
+	//フィールド
 	Scene scene;
+	//閲覧可能リスト
+	static ObservableList<String> ol;
+	//リストビュー
+	static ListView<String> lv;
 	
 	SceneSettingClothing(Stage stage)
 	{
@@ -39,7 +42,7 @@ public class SceneSettingClothing extends SceneMain {
 		
 		//オブジェクト作成
 		BorderPane bp = new BorderPane();
-		EventSettingClothing event = new EventSettingClothing(this);
+		EventSettingClothing event = new EventSettingClothing(this, ol, lv);
 		Label title = new Label("追加する服装の情報を入力してください");
 		
 		List<Label> lb = new ArrayList<Label>()
@@ -133,10 +136,10 @@ public class SceneSettingClothing extends SceneMain {
  		//オブジェクト作成
 		Stage subStage = new Stage();
 		BorderPane bp = new BorderPane();
- 		EventSettingClothing event = new EventSettingClothing(this);
- 		ListView<String> lv = new ListView<String>();
+ 		EventSettingClothing event = new EventSettingClothing(this, ol, lv);
 		Button addition = new Button("追加");
 		Label title = new Label("削除する服装の情報を入力してください");
+		lv = new ListView<String>();
 		List<Button> button = new ArrayList<Button>()
 		{
 			{
@@ -162,7 +165,7 @@ public class SceneSettingClothing extends SceneMain {
 		addition.setTranslateX(-20);
 		addition.setTranslateY(30);
 		
-		//下部　キャンセルと登録
+		//下部　キャンセルと決定
 		HBox hb_bottom = new HBox();
 		hb_bottom.getChildren().addAll(button);
 		hb_bottom.setPadding(new Insets(9, 9, 9, 9));
@@ -172,14 +175,9 @@ public class SceneSettingClothing extends SceneMain {
 		//データ処理部より服装データを取得するメソッドを呼び出す
 		//List<Clothes> clothes = new DataSettingClothing().getClothes();
 		
-		ObservableList<String> ol =
-				FXCollections.observableArrayList();
+		ol = FXCollections.observableArrayList();
 		//すべての服装データをDBからとってくる
 		List<Clothes> clothes = new DataSettingClothing().getClothes();
-		//for(int i = 0; i < clothes.size(); i++)
-		//{
-		//	ol.add(clothes.get(i).name);  //Labelに服装名称を追加する
-		//}
 		for(int i = 0; i < clothes.size(); ++i)
 		{
 			ol.add(clothes.get(i).name);
@@ -189,19 +187,30 @@ public class SceneSettingClothing extends SceneMain {
 		
 		event.clickCancel(button.get(0));
 		event.clickAddition(addition);
+		event.clickRegister2(button.get(1));
 		
 		//ペイン割り当て
 		bp.setTop(vb_top);
 		bp.setCenter(lv);
 		bp.setRight(addition);
 		bp.setBottom(hb_bottom);
-
-		//event.clickRegister2(register, ol, lv);
+		
 		this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
 
 	Scene getScene() 
 	{
 		return this.scene;
+	}
+	
+	
+	ObservableList getOList()
+	{
+		return ol;
+	}
+	
+	ListView getVList()
+	{
+		return lv;
 	}
 }

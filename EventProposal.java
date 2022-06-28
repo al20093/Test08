@@ -9,10 +9,10 @@ package application;
 
 import javafx.scene.control.Button;
 
-public class EventArea {
-SceneArea area;
+public class EventProposal {
+	SceneProposal area;
 	
-	EventArea(SceneArea area)
+	EventProposal(SceneProposal area)
 	{
 		this.area = area;
 	}

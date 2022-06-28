@@ -28,7 +28,12 @@ public class EventWeight
 		bt.setOnAction((ActionEvent) ->
 		{ 
 			new CreateAlert().confirm(Constant.CANCELMESSAGE);
-			weight.assignSceneToStage("preference"); 
+			if(new DataWeight().getBoot())
+			{
+				weight.assignSceneToStage("preference");
+			} else {
+				weight.assignSceneToStage("gender");
+			}
 		});
 	}
 	
@@ -43,7 +48,13 @@ public class EventWeight
 			}
 			new DataWeight().weightSave(wdata);
 			new CreateAlert().complete("重みの登録が完了しました。");
-			weight.assignSceneToStage("preference");
+			if(new DataWeight().getBoot())
+			{
+				weight.assignSceneToStage("preference");
+			} else {
+				weight.assignSceneToStage("home");
+				new DataWeight().onBoot();
+			}
 		});
 	}
 }

@@ -48,7 +48,7 @@ class DataSettingClothing
 		//全ての服装データnameに会うデータを持ってくる
 		for(int i = 0; i < allClothes.size(); i++ )
 		{
-			if(clothesName == allClothes.get(i).name)
+			if(clothesName.equals(allClothes.get(i).name))
 				{
 					clothes = allClothes.get(i);
 					break;
@@ -64,5 +64,46 @@ class DataSettingClothing
 	void deleteClothes(Clothes clothes)
 	{
 		new UserData().clothesDelete(clothes);
+	}
+	
+	int exceptionText(Clothes clothes)
+	{
+		//文字数カウント用
+		char[] chCount;
+		//名称　文字数チェック
+		chCount = clothes.name.toCharArray();
+		if(chCount.length > Constant.LIMITWORDS)
+		{
+			return -1;
+		}
+		//空欄チェック
+		if(chCount.length <= 0)
+		{
+			return -4;
+		}
+		//服装分類　文字数チェック
+		chCount = clothes.kind.toCharArray();
+		if(chCount.length > Constant.LIMITWORDS)
+		{
+			return -2;
+		}
+		//空欄チェック
+		if(chCount.length <= 0)
+		{
+			return -4;
+		}
+		//部位分類　文字数チェック
+		chCount = clothes.part.toCharArray();
+		if(chCount.length > Constant.LIMITWORDS)
+		{
+			return -3;
+		}
+		//空欄チェック
+		if(chCount.length <= 0)
+		{
+			return -4;
+		}
+		//正常に実行された
+		return 0;
 	}
 }
