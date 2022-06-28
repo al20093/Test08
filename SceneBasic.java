@@ -1,6 +1,7 @@
+
 /****************************************/
 /*author:佐野　渉 6/21更新 
-/*author:名久井愛紗 6/25更新 
+/*author:名久井愛紗 6/28更新 
 /*C2:基本画面処理部所属 
 /*SceneBasic: 
 /*基本画面処理部での画面作成処理を記述する
@@ -29,6 +30,10 @@ public class SceneBasic extends SceneMain
 		super(stage);
 	}
 	
+	//-------------------------------------------- 
+	//void createInitial() 
+	////W1初期設定画面作成
+	//--------------------------------------------
 	void createInitial()
 	{
 		//ペイン作成
@@ -40,7 +45,7 @@ public class SceneBasic extends SceneMain
 		
 		lb.add(new Label("初期設定を行います"));
 		lb.add(new Label("画面内をクリックしてください"));
-		for(int i=0; i<2; i++)
+		for(int i = 0; i < 2; i++)
 		{
 			lb.get(i).setFont(Font.font
 					(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
@@ -58,18 +63,16 @@ public class SceneBasic extends SceneMain
 		event.clickWindow();
 	}
 	
+	//-------------------------------------------- 
+	//void createHome() 
+	////W4ホーム画面作成
+	//--------------------------------------------
 	void createHome()
 	{
-		//ラベルリスト作成
-		List<Label> lb = new ArrayList<Label>();
-		lb.add(new Label("服装提案システム"));
-		for(int i=0; i<1; i++)
-		{
-			lb.get(i).setFont(Font.font
-					(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
-		}
-		BorderPane bp = new BorderPane();
-		EventBasic event = new EventBasic(this);
+		Label lb = new Label("服装提案を行うアプリケーションです"); //ラベル作成
+		BorderPane bp = new BorderPane(); //ボーダーペイン作成
+		EventBasic event = new EventBasic(this); //イベントオブジェクト作成
+		//ボタンリスト作成
 		List<Button> bt = new ArrayList<Button>()
 		{
 			{
@@ -78,53 +81,52 @@ public class SceneBasic extends SceneMain
 				add(new Button("フィードバック"));
 			}
 		};
-		
 		for(int i = 0; i < bt.size(); i++)
 		{
 			bt.get(i).setFont(Font.font(
 					Constant.FONTFAMILY,Constant.FONTWEIGHT,30));
 		}
-		//ボタンをVBoxに割り当てる
+		
+		//ラベルとボタンをVBoxに割り当てる
 		VBox vb = new VBox();
+		VBox vb2 = new VBox();
 		vb.setAlignment(Pos.CENTER);
-		vb.setPadding(new Insets(10, 10, 10, 10));
+		vb2.setAlignment(Pos.CENTER);
+		vb.setPadding(new Insets(0, 0, 0, 0));
+		vb2.setPadding(new Insets(0, 0, 0, 0));
 		vb.setSpacing(30);
-		vb.getChildren().addAll(bt);
-		
-		
-		VBox vbt = new VBox();
-		vbt.setAlignment(Pos.CENTER);
-		vbt.getChildren().addAll(SceneContents.subTitle("ホーム画面"));
-		vbt.getChildren().addAll(lb);
-		
+		vb2.setSpacing(10);
+		vb.getChildren().addAll(bt); //"設定""服装提案""フィードバック"ボタン
+		vb2.getChildren().addAll(SceneContents.subTitle("ホーム画面"), lb); //"服装提案を行うアプリケーションです"ラベル
+		vb.setTranslateY(-10);
 		
 		//上部メッセージ作成
-		//lb.setFont(Font.font(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
-		//lb.setTranslateY(20);
+		lb.setFont(Font.font(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
+		
 		//ペイン割り当て
-		bp.setCenter(vb);
-		bp.setTop(vbt);
+		bp.setCenter(vb); //"設定""服装提案""フィードバック"ボタン
+		bp.setTop(vb2); //"服装提案を行うアプリケーションです"ラベル
+		BorderPane.setAlignment(lb, Pos.CENTER);
+		
 		//ボタンにイベント割り当て
-		event.transitionPreference(bt.get(0));
-		event.transitionClothing(bt.get(1));
-		event.transitionFeedback(bt.get(2));
+		event.transitionPreference(bt.get(0)); //"設定"ボタン
+		event.transitionClothing(bt.get(1)); //"服装提案"ボタン
+		event.transitionFeedback(bt.get(2)); //"フィードバック"ボタン
 		
 		//シーンの作成
 		scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
 	
+	//-------------------------------------------- 
+	//void createHome() 
+	////W10設定画面作成
+	//--------------------------------------------
 	void createPreference()
 	{
-		//ラベルリスト作成
-		List<Label> lb = new ArrayList<Label>();
-		lb.add(new Label("設定したい項目を選択してください"));
-		for(int i=0; i<1; i++)
-		{
-			lb.get(i).setFont(Font.font
-					(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
-		}
-		BorderPane bp = new BorderPane();
-		EventBasic event = new EventBasic(this);
+		Label lb = new Label("設定したい項目を選択してください"); //ラベル作成
+		BorderPane bp = new BorderPane(); //ボーダーペイン作成
+		EventBasic event = new EventBasic(this); //イベントオブジェクト作成
+		//ボタンリスト作成
 		List<Button> bt = new ArrayList<Button>()
 		{
 			{
@@ -134,7 +136,6 @@ public class SceneBasic extends SceneMain
 				add(new Button("キャンセル"));
 			}
 		};
-		
 		for(int i = 0; i < bt.size(); i++)
 		{
 			bt.get(i).setFont(Font.font(
@@ -142,39 +143,39 @@ public class SceneBasic extends SceneMain
 		}
 		bt.get(3).setFont(Font.font(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
 		
-		//ボタンをVBoxに割り当てる
+		//ラベルやボタンをVBoxに割り当てる
 		VBox vb = new VBox();
+		VBox vb2 = new VBox();
 		vb.setAlignment(Pos.CENTER);
-		vb.setPadding(new Insets(10, 10, 10, 10));
+		vb2.setAlignment(Pos.CENTER);
+		vb.setPadding(new Insets(0, 0, 0, 0));
+		vb2.setPadding(new Insets(0, 0, 0, 0));
 		vb.setSpacing(30);
-		vb.getChildren().addAll(bt);
-		
-		vb.setTranslateY(30);
+		vb2.setSpacing(10);
+		vb.getChildren().addAll(bt); //"性別""重み設定""服装追加""キャンセル"ボタン
+		vb2.getChildren().addAll(SceneContents.subTitle("設定"), lb); //"設定したい項目を選択してください"ラベル
+		vb.setTranslateY(10);
 		bt.get(3).setTranslateX(-120);
-	
 		
-		
-		VBox vbt = new VBox();
-		vbt.setAlignment(Pos.CENTER);
-		vbt.getChildren().addAll(SceneContents.subTitle("設定"));
-		vbt.getChildren().addAll(lb);
-		
-	
+		//上部メッセージ作成
+		lb.setFont(Font.font(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
 		
 		//ペイン割り当て
-		bp.setCenter(vb);
-		bp.setTop(vbt);
+		bp.setCenter(vb); //"性別""重み設定""服装追加""キャンセル"ボタン
+		bp.setTop(vb2); //"設定したい項目を選択してください"ラベル
+		BorderPane.setAlignment(lb, Pos.CENTER);
 		
 		//ボタンにイベント割り当て
-		event.transitionGender(bt.get(0));
-		event.transitionWeight(bt.get(1));
-		event.transitionAddition(bt.get(2));
-		event.transitionHome(bt.get(3));
+		event.transitionGender(bt.get(0)); //"性別"ボタン
+		event.transitionWeight(bt.get(1)); //"重み追加"ボタン
+		event.transitionAddition(bt.get(2)); //"服装追加"ボタン
+		event.transitionHome(bt.get(3)); //"キャンセル"ボタン
 		
 		//シーンの作成
 		scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
 	
+	//画面作成
 	Scene getScene()
 	{
 		return scene;
