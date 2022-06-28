@@ -44,7 +44,7 @@ public class EventWeight
 				String input = chtf.get(i).getText();  //inputにTextFieldの内容を入力
 				if(input == null || input.trim().isEmpty())   // inputが空の場合の処理
 				{
-					new CreateAlert().failure("1から11までの数字を入力してください。");
+					new CreateAlert().failure("1から11までの数字を半角で入力してください。");
 					weight.assignSceneToStage("weight");
 					break;
 				}else{
@@ -68,7 +68,7 @@ public class EventWeight
 								wdata.add(k);
 								checkdata++;
 							} else {
-								new CreateAlert().failure("1から11までの数字を入力してください。");
+								new CreateAlert().failure("1から11までの数字を半角で入力してください。");
 								weight.assignSceneToStage("weight");
 								break;
 							}
@@ -78,7 +78,7 @@ public class EventWeight
 							break;
 						}
 					} else {
-						new CreateAlert().failure("1から11までの数字を入力してください。");
+						new CreateAlert().failure("1から11までの数字を半角で入力してください。");
 						weight.assignSceneToStage("weight");
 						break;
 					}
