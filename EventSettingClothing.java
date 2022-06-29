@@ -1,6 +1,6 @@
 /**********************************************/
 /*author:西村　美玖 6/21更新
-/		 佐野　渉 6/28更新
+/		 佐野　渉 6/29更新
 /*C7:服装設定処理部所属
 /*EventSettingClothing:
 /*服装設定モードのイベント処理を記述したクラス
@@ -18,8 +18,7 @@ public class EventSettingClothing
 {
 	SceneSettingClothing settingClothing;
 	
-	EventSettingClothing(SceneSettingClothing settingclothing, ObservableList<String> ol,
-			ListView<String> lv)
+	EventSettingClothing(SceneSettingClothing settingclothing)
 	{
 		this.settingClothing = settingclothing;
 	}
@@ -37,11 +36,12 @@ public class EventSettingClothing
 			try
 			{
 				Clothes clothes = new Clothes();
-			
+				//テキストボックスの値を格納
 				clothes.name = tf.get(0).getText();
 				clothes.kind = tf.get(1).getText();
 				clothes.part = tf.get(2).getText();
 				clothes.index = Double.parseDouble(tf.get(3).getText());
+				//テキストボックスエラー処理
 				switch(new DataSettingClothing().exceptionText(clothes))
 				{
 				case -1 :
@@ -56,13 +56,23 @@ public class EventSettingClothing
 				case -4 :
 					new CreateAlert().failure(Constant.EMPTYERROR);
 					return;
+				case -5 :
+					new CreateAlert().failure(Constant.INDEXERROR);
+					return;
 				}
-				
-				//リストに服装を追加
-				settingClothing.getOList().add(clothes.name);
 				//登録完了アラート画面表示
-				new DataSettingClothing().addClothes(clothes);
-				new CreateAlert().complete(Constant.REGISTERMESSAGE);
+				if(new DataSettingClothing().addClothes(clothes))
+				{
+					//リストに服装を追加
+					settingClothing.getOList().add(clothes.name);
+					//服装追加成功
+					new CreateAlert().complete(Constant.REGISTERMESSAGE);
+					//テキストフィールドをリセット
+					settingClothing.resetText();
+				} else {
+					//服装追加失敗
+					new CreateAlert().failure(Constant.ADDCLOTHESERROR);
+				}
 			} catch(NumberFormatException e) {
 				//服装指数が無効な数字であった場合
 				new CreateAlert().failure(Constant.INDEXERROR);
@@ -84,8 +94,8 @@ public class EventSettingClothing
 				ListView<String> lv = settingClothing.getVList();
 				String deleteClothing;
 				String name;
+				//選択されたリストビューの項目名を格納
 				deleteClothing = lv.getSelectionModel().getSelectedItem();
-				System.out.println(ol);
 				//名前を取り出す
 				name = deleteClothing;
 				//データ処理部を呼び出す,消すアイテムをclothesにいれる
@@ -112,13 +122,17 @@ public class EventSettingClothing
 	{
 		delete.setOnAction((ActionEvent) ->
 		{
+			//削除ボタンを押したらW9画面へ移動
 			settingClothing.assignSceneToStage("delete");
-		}); //削除ボタンを押したらW9画面へ移動
+		});
 	}
 	
 	void clickAddition(Button add)
 	{
 		add.setOnAction((ActionEvent) ->
-		{settingClothing.assignSceneToStage("addition");}); //追加ボタンを押したらW9画面へ移動
+		{
+			//追加ボタンを押したらW9画面へ移動
+			settingClothing.assignSceneToStage("addition");
+		});
 	}
 }

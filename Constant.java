@@ -89,9 +89,11 @@ public class Constant {
 	//部位分類エラー
 	final static String PARTERROR = "部位分類は１６文字以内で入力してください。";
 	//服装指数エラー
-	final static String INDEXERROR = "服装指数は半角少数形式５文字以内で入力してください。";
+	final static String INDEXERROR = "服装指数は半角小数形式、小数第二位以内で入力してください。";
 	//空欄エラー
 	final static String EMPTYERROR = "入力欄には何かしらの値を入れる必要があります。";
+	//服装追加時エラー
+	final static String ADDCLOTHESERROR = "すでに同じ名称の服装が登録されています。";
 	//ラジオボタン未選択エラー
 	final static String EMPTYRADIOERROR = "ラジオボタンが未選択です。";
 	//不明エラー

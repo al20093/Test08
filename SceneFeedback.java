@@ -27,6 +27,11 @@ class SceneFeedback extends SceneMain
 {
 	Scene scene;
 	
+	//-------------------------------------------- 
+	//SceneProposal(Stage stage)
+	//スーパークラスからステージ情報を受け取る
+	//stage:シーンの割り当てられたステージ
+	//--------------------------------------------
 	SceneFeedback(Stage stage)
 	{
 		super(stage);
@@ -152,7 +157,12 @@ class SceneFeedback extends SceneMain
 		//シーンの作成
 		this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
-	
+	//-------------------------------------------- 
+	//void getScene()
+	//シーン情報を返すメソッド
+	//画面遷移に利用する
+	//scene:シーンのレイアウト情報
+	//--------------------------------------------
 	Scene getScene() 
 	{
 		return this.scene;

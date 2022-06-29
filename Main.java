@@ -15,6 +15,12 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		//DBとの接続
 		UserData.getConnection();
+		//初起動のチェック
+		if(!Constant.FIRSTBOOT)
+		{
+			//JSONデータの初期化
+			new UserData().defaultWrite();
+		}
 		//シーンのスーパークラス作成
 		SceneMain sceneMain = new SceneMain(primaryStage);
 		//他すべてのシーンを作成する
@@ -27,8 +33,6 @@ public class Main extends Application {
 		} else {
 			//初起動の時　初期画面へ
 			sceneMain.assignSceneToStage("initial");
-			//デフォルト設定を行う
-			new UserData().defaultWrite();
 		}
 	}
 	

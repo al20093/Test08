@@ -24,7 +24,13 @@ public class SceneGender extends SceneMain
 {
 	Scene scene;
 	
-	SceneGender(Stage stage){
+	//-------------------------------------------- 
+	//SceneProposal(Stage stage)
+	//スーパークラスからステージ情報を受け取る
+	//stage:シーンの割り当てられたステージ
+	//--------------------------------------------
+	SceneGender(Stage stage)
+	{
 		super(stage);
 	}
 	
@@ -80,8 +86,14 @@ public class SceneGender extends SceneMain
 		
 
 	}
-	//sceneを返す
-	Scene getScene() {
+	//-------------------------------------------- 
+	//void getScene()
+	//シーン情報を返すメソッド
+	//画面遷移に利用する
+	//scene:シーンのレイアウト情報
+	//--------------------------------------------
+	Scene getScene() 
+	{
 		return scene;
 	}
 }

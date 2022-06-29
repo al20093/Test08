@@ -32,7 +32,14 @@ public class SceneSettingClothing extends SceneMain {
 	static ObservableList<String> ol;
 	//リストビュー
 	static ListView<String> lv;
+	//テキストフィールド
+	List<TextField> tf;
 	
+	//-------------------------------------------- 
+	//SceneProposal(Stage stage)
+	//スーパークラスからステージ情報を受け取る
+	//stage:シーンの割り当てられたステージ
+	//--------------------------------------------
 	SceneSettingClothing(Stage stage)
 	{
 		super(stage);
@@ -42,7 +49,7 @@ public class SceneSettingClothing extends SceneMain {
 		
 		//オブジェクト作成
 		BorderPane bp = new BorderPane();
-		EventSettingClothing event = new EventSettingClothing(this, ol, lv);
+		EventSettingClothing event = new EventSettingClothing(this);
 		Label title = new Label("追加する服装の情報を入力してください");
 		
 		List<Label> lb = new ArrayList<Label>()
@@ -64,7 +71,7 @@ public class SceneSettingClothing extends SceneMain {
 			}
 		};
 		
-		List<TextField> tf = new ArrayList<TextField>()
+		tf = new ArrayList<TextField>()
 		{
 			{
 				add(new TextField());
@@ -136,7 +143,7 @@ public class SceneSettingClothing extends SceneMain {
  		//オブジェクト作成
 		Stage subStage = new Stage();
 		BorderPane bp = new BorderPane();
- 		EventSettingClothing event = new EventSettingClothing(this, ol, lv);
+ 		EventSettingClothing event = new EventSettingClothing(this);
 		Button addition = new Button("追加");
 		Label title = new Label("削除する服装の情報を入力してください");
 		lv = new ListView<String>();
@@ -175,6 +182,7 @@ public class SceneSettingClothing extends SceneMain {
 		//データ処理部より服装データを取得するメソッドを呼び出す
 		//List<Clothes> clothes = new DataSettingClothing().getClothes();
 		
+		//閲覧可能リストのオブジェクト生成
 		ol = FXCollections.observableArrayList();
 		//すべての服装データをDBからとってくる
 		List<Clothes> clothes = new DataSettingClothing().getClothes();
@@ -183,8 +191,10 @@ public class SceneSettingClothing extends SceneMain {
 			ol.add(clothes.get(i).name);
 		}
 	
+		//リストビューに項目を入れる
 		lv.setItems(ol);	
 		
+		//イベント割り当て
 		event.clickCancel(button.get(0));
 		event.clickAddition(addition);
 		event.clickRegister2(button.get(1));
@@ -197,7 +207,12 @@ public class SceneSettingClothing extends SceneMain {
 		
 		this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
-
+	//-------------------------------------------- 
+	//void getScene()
+	//シーン情報を返すメソッド
+	//画面遷移に利用する
+	//scene:シーンのレイアウト情報
+	//--------------------------------------------
 	Scene getScene() 
 	{
 		return this.scene;
@@ -212,5 +227,13 @@ public class SceneSettingClothing extends SceneMain {
 	ListView getVList()
 	{
 		return lv;
+	}
+	
+	void resetText()
+	{
+		for(int i = 0; i < tf.size(); ++i)
+		{
+			tf.get(i).setText(null);
+		}
 	}
 }
