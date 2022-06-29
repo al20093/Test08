@@ -45,6 +45,17 @@ class UserData
 	}
 	
 	//--------------------------------------------
+	//boolean writeBoot()
+	//初起動のフラグをJSONファイルに書き込むメソッド
+	//boot:初期起動フラグ
+	//--------------------------------------------
+	void writeBoot(boolean boot)
+	{
+		jsonObj.put("boot", boot);
+		jsonWrite();
+	}
+	
+	//--------------------------------------------
 	//boolean checkBoot()
 	//初起動かどうかチェックするメソッド
 	//boolean:初起動のときfalse
@@ -73,8 +84,6 @@ class UserData
 		{
 			clothesWrite(Constant.CLOTHES.get(i));
 		}
-		//既起動に変更
-		jsonObj.put("boot", true);
 		//JSON書き込み
 		jsonWrite();
 	}
@@ -215,7 +224,7 @@ class UserData
 			try 
 			{
 				Class.forName("org.sqlite.JDBC");
-				con = DriverManager.getConnection("jdbc:sqlite:user.sqlite3");
+				con = DriverManager.getConnection("jdbc:sqlite:" + Constant.DBPATH);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

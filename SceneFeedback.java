@@ -27,6 +27,11 @@ class SceneFeedback extends SceneMain
 {
 	Scene scene;
 	
+	//-------------------------------------------- 
+	//SceneProposal(Stage stage)
+	//スーパークラスからステージ情報を受け取る
+	//stage:シーンの割り当てられたステージ
+	//--------------------------------------------
 	SceneFeedback(Stage stage)
 	{
 		super(stage);
@@ -76,12 +81,17 @@ class SceneFeedback extends SceneMain
 		
 		//ラベル作成
 		//List<Clothes> clothes = new DataFeedback().getList();
+		
+		//ダミーデータここから
 		List<Clothes> clothes = new ArrayList<Clothes>();
 		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
 		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
 		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
 		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
 		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
+		new UserData().createCList(clothes);
+		//ダミーデータここまで　
+		
 		List<Label> label = new ArrayList<Label>()
 		{
 			{
@@ -137,7 +147,7 @@ class SceneFeedback extends SceneMain
 		
 		//イベント割り当て
 		int size = 5; //ラベルの数だけ
-		event.clickRegister(register, size+1);
+		event.clickRegister(register, size+1, label);
 		for(int i = 0; i < rb.size(); i++ )
 		{
 			event.clickRadio(rb.get(i));
@@ -147,7 +157,12 @@ class SceneFeedback extends SceneMain
 		//シーンの作成
 		this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
-	
+	//-------------------------------------------- 
+	//void getScene()
+	//シーン情報を返すメソッド
+	//画面遷移に利用する
+	//scene:シーンのレイアウト情報
+	//--------------------------------------------
 	Scene getScene() 
 	{
 		return this.scene;

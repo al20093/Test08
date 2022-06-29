@@ -1,5 +1,6 @@
 /**********************************************/
 /*author:西村　美玖 6/21更新
+/		 佐野　渉 6/29更新
 /*C7:服装設定処理部所属
 /*EventSettingClothing:
 /*服装設定モードのイベント処理を記述したクラス
@@ -32,110 +33,106 @@ public class EventSettingClothing
 	{
 		register.setOnAction((ActionEvent) -> 
 		{
-			//String clothingName;
-			//String clothingClass;
-			//String bodyClass;
-			//double clothingValue;
-			
-			Clothes clothes = new Clothes();
-			
-			clothes.name = tf.get(0).getText();
-			clothes.kind = tf.get(1).getText();
-			clothes.part = tf.get(2).getText();
-			clothes.index = Double.parseDouble(tf.get(3).getText());
-			
-			//データ処理部の書き込みメソッドを呼び出す
-			//new DataSettingClothing().addClothes(clothes);
-			
-			//確認用
-			System.out.println(clothes.name);
-			System.out.println(clothes.kind);
-			System.out.println(clothes.part);
-			System.out.println(clothes.index);
-			
-			//登録完了アラート画面表示
-			new DataSettingClothing().addClothes(clothes);
-			new CreateAlert().complete(Constant.REGISTERMESSAGE);
+			try
+			{
+				Clothes clothes = new Clothes();
+				//テキストボックスの値を格納
+				clothes.name = tf.get(0).getText();
+				clothes.kind = tf.get(1).getText();
+				clothes.part = tf.get(2).getText();
+				clothes.index = Double.parseDouble(tf.get(3).getText());
+				//テキストボックスエラー処理
+				switch(new DataSettingClothing().exceptionText(clothes))
+				{
+				case -1 :
+					new CreateAlert().failure(Constant.NAMEERROR);
+					return;
+				case -2 :
+					new CreateAlert().failure(Constant.CLOTHESERROR);
+					return;
+				case -3 :
+					new CreateAlert().failure(Constant.PARTERROR);
+					return;
+				case -4 :
+					new CreateAlert().failure(Constant.EMPTYERROR);
+					return;
+				case -5 :
+					new CreateAlert().failure(Constant.INDEXERROR);
+					return;
+				}
+				//登録完了アラート画面表示
+				if(new DataSettingClothing().addClothes(clothes))
+				{
+					//リストに服装を追加
+					settingClothing.getOList().add(clothes.name);
+					//服装追加成功
+					new CreateAlert().complete(Constant.REGISTERMESSAGE);
+					//テキストフィールドをリセット
+					settingClothing.resetText();
+				} else {
+					//服装追加失敗
+					new CreateAlert().failure(Constant.ADDCLOTHESERROR);
+				}
+			} catch(NumberFormatException e) {
+				//服装指数が無効な数字であった場合
+				new CreateAlert().failure(Constant.INDEXERROR);
+			} catch(Exception e) {
+				//それ以外の場合
+				new CreateAlert().failure(Constant.UNKNOWNERROR);
+				e.printStackTrace();
+			}
 		}); 
 	}
 	
-	void clickRegister2(Button register, ObservableList<String> ol, ListView<String> lv)
+	void clickRegister2(Button register)
 	{
 		register.setOnAction((ActionEvent) -> 
 		{
-			String deleteClothing;
-			String name;
-			deleteClothing = lv.getSelectionModel().getSelectedItem();
-			
-			//名前を取り出す
-			name = deleteClothing;
-			//データ処理部を呼び出す,消すアイテムをclothesにいれる
-			Clothes clothes = new DataSettingClothing().matching(name);
-			for(int i = 0; i < ol.size(); i++)
+			try
 			{
-				if(ol.get(i).equals(clothes.name)) ol.remove(i);
+				ObservableList<String> ol = settingClothing.getOList();
+				ListView<String> lv = settingClothing.getVList();
+				String deleteClothing;
+				String name;
+				//選択されたリストビューの項目名を格納
+				deleteClothing = lv.getSelectionModel().getSelectedItem();
+				//名前を取り出す
+				name = deleteClothing;
+				//データ処理部を呼び出す,消すアイテムをclothesにいれる
+				Clothes clothes = new DataSettingClothing().matching(name);
+				//登録完了アラート画面表示
+				boolean check = new CreateAlert().confirm(Constant.DELETEQUESTION);
+				if(check == true)
+				{
+					for(int i = 0; i < ol.size(); i++)
+					{
+						if(ol.get(i).equals(clothes.name)) ol.remove(i);
+					}
+					new DataSettingClothing().deleteClothes(clothes);
+					new CreateAlert().complete(Constant.DELETECOMPLETE);
+				}
+			} catch(Exception e) {
+				new CreateAlert().failure(Constant.UNKNOWNERROR);
+				e.printStackTrace();
 			}
-			
-			//確認用
-			System.out.println(deleteClothing);
-			
-			boolean check = new CreateAlert().confirm(Constant.DELETEMESSAGE); //登録完了アラート画面表示
-			if(check == true)
-			{
-				System.out.println("true");
-			}else{
-				System.out.println("false");
-			}
-			
 		}); 
 	}
 	
 	void clickDelete(Button delete)
 	{
 		delete.setOnAction((ActionEvent) ->
-		{settingClothing.assignSceneToStage("delete");}); //削除ボタンを押したらW9画面へ移動
+		{
+			//削除ボタンを押したらW9画面へ移動
+			settingClothing.assignSceneToStage("delete");
+		});
 	}
 	
 	void clickAddition(Button add)
 	{
 		add.setOnAction((ActionEvent) ->
-		{settingClothing.assignSceneToStage("addition");}); //追加ボタンを押したらW9画面へ移動
+		{
+			//追加ボタンを押したらW9画面へ移動
+			settingClothing.assignSceneToStage("addition");
+		});
 	}
 }
-
-/*public class EventClothingList
-{
-	SceneClothingList clothinglist;
-	
-	EventClothingList(SceneInputClothing clothinglist)
-	{
-		this.clothinglist = clothinglist;
-	}
-	
-	void clickRegister(Button register, ListView<String> lv)
-	{
-		register.setOnAction((ActionEvent) -> 
-		{
-			String deleteClothing;
-			deleteClothing = lv.getSelectionModel().getSelectedItem();
-			
-			//確認用
-			System.out.println(deleteClothing);
-			
-			boolean check = new CreateAlert().confirm("削除が完了しました。"); //登録完了アラート画面表示
-			if(check == true)
-			{
-				System.out.println("true");
-			}else{
-				System.out.println("false");
-			}
-			
-		}); 
-	}
-	
-	void clickAdd(Button add)
-	{
-		add.setOnAction((ActionEvent) ->
-		{clothinglist.assignSceneToStage("add");}); //追加ボタンを押したらW9画面へ移動
-	}
-}*/

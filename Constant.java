@@ -54,13 +54,17 @@ public class Constant {
 	//画面ウィンドウ幅
 	final static int WIDTH = 400;
 	final static int HEIGHT = 400;
+	
 	//基本フォント設定
 	//フォントの種類
 	final static String FONTFAMILY = "SansSerif";
 	//フォントの太さ
 	final static FontWeight FONTWEIGHT = FontWeight.LIGHT;
+	
 	//JSONファイルパス
 	final static String JSONPATH = "./data.json";
+	//DBファイルパス
+	final static String DBPATH = "user.sqlite3";
 	//DBのテーブル名
 	final static String TABLENAME1 = "clothes";
 	final static String TABLENAME2 = "clist";
@@ -68,14 +72,39 @@ public class Constant {
 	final static String WEBURL = "https://tenki.jp/";
 	//重みの範囲
 	final static double[] WEIGHTRANGE = {0.5, 2.0};
+	
 	//アラート画面に表示するメッセージ
 	//キャンセル時メッセージ
 	final static String CANCELMESSAGE = "本当に戻りますか？";
 	//登録時メッセージ
 	final static String REGISTERMESSAGE = "登録が完了しました。";
+	//削除確認メッセージ
+	final static String DELETEQUESTION = "本当に削除しますか？";
 	//削除時メッセージ
-	final static String DELETEMESSAGE = "削除が完了しました。";
+	final static String DELETECOMPLETE = "削除が完了しました。";
+	//名称エラー
+	final static String NAMEERROR = "名称は１６文字以内で入力してください。";
+	//服装分類エラー
+	final static String CLOTHESERROR = "服装分類は１６文字以内で入力してください。";
+	//部位分類エラー
+	final static String PARTERROR = "部位分類は１６文字以内で入力してください。";
+	//服装指数エラー
+	final static String INDEXERROR = "服装指数は半角小数形式、小数第二位以内で入力してください。";
+	//空欄エラー
+	final static String EMPTYERROR = "入力欄には何かしらの値を入れる必要があります。";
+	//服装追加時エラー
+	final static String ADDCLOTHESERROR = "すでに同じ名称の服装が登録されています。";
+	//ラジオボタン未選択エラー
+	final static String EMPTYRADIOERROR = "ラジオボタンが未選択です。";
+	//不明エラー
+	final static String UNKNOWNERROR = "原因不明なエラーです。";
+	
 	//フィードバックフラグfalse時メッセージ
 	final static String FLAGMESSAGE = "フィードバックは服装提案後に行うことができます。";
+	//テキストボックス文字数制限
+	//文字形式
+	final static int LIMITWORDS = 16;
+	//数字形式
+	final static int LIMITNUMBER = 5;
 	//ここまで------------------------------------------------
 }

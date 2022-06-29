@@ -45,8 +45,8 @@ public class SceneContents
 		SceneBasic preference = new SceneBasic(sceneMain.getStage());
 		SceneGender gender = new SceneGender(sceneMain.getStage());
 		SceneFeedback feedback = new SceneFeedback(sceneMain.getStage());
-		SceneArea area = new SceneArea(sceneMain.getStage());
-		SceneArea proposal = new SceneArea(sceneMain.getStage());
+		SceneProposal area = new SceneProposal(sceneMain.getStage());
+		SceneProposal proposal = new SceneProposal(sceneMain.getStage());
 		SceneWeight weight = new SceneWeight(sceneMain.getStage());
 		SceneSettingClothing addition = new SceneSettingClothing(sceneMain.getStage());
 		SceneSettingClothing delete = new SceneSettingClothing(sceneMain.getStage());
@@ -57,7 +57,7 @@ public class SceneContents
 		gender.createGender();
 		feedback.createFeedback();
 		area.createArea();
-		proposal.createClothing();
+		proposal.createProposal();
 		weight.createWeight();
 		addition.createAddition();
 		delete.createDelete();

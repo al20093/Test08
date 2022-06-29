@@ -32,7 +32,7 @@ public class DataFeedback
 		
 		List<Double> weightClothes = new ArrayList<Double>();
 		//ラグランジュ補完を呼び出す
-		for(int i = 0; i < 5; i++)
+		for(int i = 0; i < value.size(); i++)
 		{
 			weightClothes.add(SceneContents.Lagrange(value.get(i)
 					, 1, Constant.WEIGHTRANGE[0], 6, 1, 11, Constant.WEIGHTRANGE[1]));
@@ -51,7 +51,7 @@ public class DataFeedback
 		//ユーザ情報管理部から服装データリストをとってくる
 		List<Clothes> clothes = getList();
 		
-		for(int i = 0; i < 5; i++)
+		for(int i = 0; i < clothes.size(); i++)
 		{
 			clothes.get(i).index = clothes.get(i).index * weightClothes.get(i);
 			clothes.set(i, clothes.get(i));
@@ -76,6 +76,6 @@ public class DataFeedback
 	void flagReset()
 	{
 		//フィードバックフラグをfalseに戻す
-		new UserData().flagWrite(true);
+		new UserData().flagWrite(false);
 	}
 }

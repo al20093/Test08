@@ -65,14 +65,14 @@ class ControlWeb
 	    }
 	}
 	//平均気温を返す
-	double aveTemp()
+	String aveTemp()
 	{
-		return ave;
+		return Double.toString(ave);
 	}
 	//湿度を返す
-	int humidity() {
+	String humidity() {
 		
-		return hum;
+		return Integer.toString(hum);
 	}
 	//天気を返す
 	String weather() 
