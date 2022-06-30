@@ -1,5 +1,5 @@
 /**********************************************/
-/*author:西村　美玖 6/21更新
+/*author:西村　美玖 6/29更新
 /*		 佐野　渉 6/28更新
 /*C7:服装設定処理部所属
 /*SceneSettingClothing:
@@ -36,7 +36,7 @@ public class SceneSettingClothing extends SceneMain {
 	List<TextField> tf;
 	
 	//-------------------------------------------- 
-	//SceneProposal(Stage stage)
+	//SceneSettingClothing(Stage stage)
 	//スーパークラスからステージ情報を受け取る
 	//stage:シーンの割り当てられたステージ
 	//--------------------------------------------
@@ -44,14 +44,18 @@ public class SceneSettingClothing extends SceneMain {
 	{
 		super(stage);
 	}
-
+	//-------------------------------------------- 
+	//void createAddition()
+	//服装追加モードでの画面配置を行う
+	//--------------------------------------------
 	void createAddition() {
 		
 		//オブジェクト作成
 		BorderPane bp = new BorderPane();
-		EventSettingClothing event = new EventSettingClothing(this);
 		Label title = new Label("追加する服装の情報を入力してください");
-		
+		//イベントオブジェクト作成
+		EventSettingClothing event = new EventSettingClothing(this);
+		//名称、服装分類、部位分類、服装指数ラベルリスト"lb"の作成
 		List<Label> lb = new ArrayList<Label>()
 		{
 			{
@@ -61,8 +65,9 @@ public class SceneSettingClothing extends SceneMain {
 				add(new Label("服装指数"));
 			}
 		};
-		
+		//削除ボタン"delete"
 		Button delete = new Button("削除");
+		//キャンセル、登録ボタンリスト"button"の作成
 		List<Button> button = new ArrayList<Button>()
 		{
 			{
@@ -70,7 +75,7 @@ public class SceneSettingClothing extends SceneMain {
 				add(new Button("登録"));
 			}
 		};
-		
+		//4つのテキストフィールド"tf"の作成
 		tf = new ArrayList<TextField>()
 		{
 			{
@@ -124,7 +129,7 @@ public class SceneSettingClothing extends SceneMain {
 		hb_bottom.setSpacing(171);
 		hb_bottom.setAlignment(Pos.CENTER);
 		
-		//ペイン割り当て
+		//ペイン割り当て処理
 		bp.setTop(vb_top);
 		bp.setRight(delete);
 		bp.setCenter(vb_center);
@@ -135,18 +140,26 @@ public class SceneSettingClothing extends SceneMain {
 		event.clickCancel(button.get(0));
 		event.clickRegister1(button.get(1), tf);
 		
+		//シーンの作成処理
 		this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	 }
-	 
+	//-------------------------------------------- 
+	//void createDelete()
+	//服装削除モードでの画面配置を行う
+	//--------------------------------------------
 	 void createDelete()
 	 {
  		//オブジェクト作成
 		Stage subStage = new Stage();
 		BorderPane bp = new BorderPane();
+		//イベントオブジェクトの作成
  		EventSettingClothing event = new EventSettingClothing(this);
+ 		//追加ボタン"addition"
 		Button addition = new Button("追加");
+		//上部メッセージラベル"title"
 		Label title = new Label("削除する服装の情報を入力してください");
 		lv = new ListView<String>();
+		//キャンセル、登録ボタンリスト"button"の作成
 		List<Button> button = new ArrayList<Button>()
 		{
 			{
@@ -179,9 +192,6 @@ public class SceneSettingClothing extends SceneMain {
 		hb_bottom.setSpacing(171);
 		hb_bottom.setAlignment(Pos.CENTER);
 		
-		//データ処理部より服装データを取得するメソッドを呼び出す
-		//List<Clothes> clothes = new DataSettingClothing().getClothes();
-		
 		//閲覧可能リストのオブジェクト生成
 		ol = FXCollections.observableArrayList();
 		//すべての服装データをDBからとってくる
@@ -205,6 +215,7 @@ public class SceneSettingClothing extends SceneMain {
 		bp.setRight(addition);
 		bp.setBottom(hb_bottom);
 		
+		//シーンの作成処理
 		this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
 	//-------------------------------------------- 
@@ -218,17 +229,28 @@ public class SceneSettingClothing extends SceneMain {
 		return this.scene;
 	}
 	
-	
+	//-------------------------------------------- 
+	//ObservableList getOList()
+	//閲覧可能リスト"ol"を返すメソッド
+	//--------------------------------------------
 	ObservableList getOList()
 	{
 		return ol;
 	}
 	
+	//-------------------------------------------- 
+	//ListView getVList()
+	//リストビュー"lv"を返すメソッド
+	//--------------------------------------------
 	ListView getVList()
 	{
 		return lv;
 	}
 	
+	//-------------------------------------------- 
+	//void resetText()
+	//テキストフィールドを空にするメソッド
+	//--------------------------------------------
 	void resetText()
 	{
 		for(int i = 0; i < tf.size(); ++i)

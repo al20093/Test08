@@ -29,7 +29,7 @@ class SceneWeight extends SceneMain
 	Scene scene;
 	
 	//-------------------------------------------- 
-	//SceneProposal(Stage stage)
+	//SceneWeight(Stage stage)
 	//スーパークラスからステージ情報を受け取る
 	//stage:シーンの割り当てられたステージ
 	//--------------------------------------------

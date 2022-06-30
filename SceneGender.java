@@ -25,7 +25,7 @@ public class SceneGender extends SceneMain
 	Scene scene;
 	
 	//-------------------------------------------- 
-	//SceneProposal(Stage stage)
+	//SceneGender(Stage stage)
 	//スーパークラスからステージ情報を受け取る
 	//stage:シーンの割り当てられたステージ
 	//--------------------------------------------
@@ -81,7 +81,8 @@ public class SceneGender extends SceneMain
 		event.selectionMan(bt.get(0));
 		event.selectionWoman(bt.get(1));
 		event.selectionCancel(bt.get(2));
-		//シーンの作成
+		
+		//シーンの作成処理
 		scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 		
 
