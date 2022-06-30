@@ -25,7 +25,7 @@ public class SceneBasic extends SceneMain
 	Scene scene;
 	
 	//-------------------------------------------- 
-	//SceneProposal(Stage stage)
+	//SceneBasic(Stage stage)
 	//スーパークラスからステージ情報を受け取る
 	//stage:シーンの割り当てられたステージ
 	//--------------------------------------------
@@ -176,7 +176,7 @@ public class SceneBasic extends SceneMain
 		event.transitionAddition(bt.get(2));
 		event.transitionHome(bt.get(3));
 		
-		//シーンの作成
+		//シーンの作成処理
 		scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
 	//-------------------------------------------- 

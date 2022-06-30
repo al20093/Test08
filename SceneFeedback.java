@@ -1,5 +1,5 @@
 /**********************************************/
-/*author:西村　美玖 6/21更新
+/*author:西村　美玖 6/29更新
 /* 		 佐野　渉 6/28更新
 /*C6:フィードバック処理部所属
 /*SceneFeedback:
@@ -25,10 +25,10 @@ import javafx.stage.Stage;
 
 class SceneFeedback extends SceneMain 
 {
-	Scene scene;
+	Scene scene; //フィールド
 	
 	//-------------------------------------------- 
-	//SceneProposal(Stage stage)
+	//SceneFeedback(Stage stage)
 	//スーパークラスからステージ情報を受け取る
 	//stage:シーンの割り当てられたステージ
 	//--------------------------------------------
@@ -37,6 +37,10 @@ class SceneFeedback extends SceneMain
 		super(stage);
 	}
 	
+	//-------------------------------------------- 
+	//void createFeedback()
+	//フィードバックモードでの画面配置を行う
+	//--------------------------------------------
 	void createFeedback()
 	{
 		BorderPane bp = new BorderPane();
@@ -44,21 +48,22 @@ class SceneFeedback extends SceneMain
 		ToggleGroup tg = new ToggleGroup();
 		//イベントオブジェクトの作成
 		EventFeedback event = new EventFeedback(this);
-		
+		//ラジオボタンを11個作成する処理
 		List<RadioButton> rb = new ArrayList<RadioButton>()
 		{
 			{
-				for(int i=1; i<=11; i++)
+				for(int i = 1; i <= 11; i++)
 				{
 					add(new RadioButton(Integer.toString(i)));
 				}
 			}
 		};
-		for(int i=0; i<rb.size(); ++i) {
+		for(int i=0; i<rb.size(); ++i) 
+		{
 			rb.get(i).setToggleGroup(tg);
-			//rb.get(i).setOnAction(new FeedbackEventHandler());
 		}
 		
+		//ラベル作成処理
 		Label title = new Label("提案された服装を段階的に評価します");
 		Label day = new Label("〇月〇日の評価"); //日付表示ラベル"day"
 		
@@ -80,29 +85,20 @@ class SceneFeedback extends SceneMain
 		hot.setFont(Font.font(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
 		
 		//ラベル作成
-		//List<Clothes> clothes = new DataFeedback().getList();
-		
-		//ダミーデータここから
-		List<Clothes> clothes = new ArrayList<Clothes>();
-		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
-		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
-		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
-		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
-		clothes.add(new Clothes(1, "上着A", "上着", "上半身", 12.3));
-		new UserData().createCList(clothes);
-		//ダミーデータここまで　
-		
+		List<Clothes> clothes = new DataFeedback().getList();
+		//Labelに提案された服装名称を追加する処理
 		List<Label> label = new ArrayList<Label>()
 		{
 			{
 				for(int i = 0; i < clothes.size(); i++)
 				{
-					add(new Label("・" + clothes.get(i).name));  //Labelに服装名称を追加する
+					//Labelに服装名称を追加する
+					add(new Label("・" + clothes.get(i).name));
 					
 				}
 			}
 		};
-		
+		//ラベルのフォント設定処理
 		for(int i = 0; i < label.size(); ++i)
 		{
 			label.get(i).setFont(Font.font(Constant.FONTFAMILY,Constant.FONTWEIGHT,18));
@@ -113,7 +109,8 @@ class SceneFeedback extends SceneMain
 		vbTop.setAlignment(Pos.CENTER);
 		vbTop.setSpacing(10);
 		vbTop.getChildren().addAll(SceneContents.subTitle("フィードバック"), title);
-			
+		
+		//中部コントロール
 		VBox vbClothing = new VBox(); //帽子、手袋、上着、ズボン、靴下を垂直に塊にしたグループ"clothing"
 		vbClothing.getChildren().addAll(label);
 		vbClothing.setSpacing(10);
@@ -134,6 +131,7 @@ class SceneFeedback extends SceneMain
 		vbCenter.getChildren().addAll(day, vbClothing, hbRb, hbThermometer);
 		vbCenter.setSpacing(20);
 		
+		//下部コントロール
 		HBox hbButton = new HBox(); //registerとcancelを水平に並べたかたまり"hb_button"
 		hbButton.setAlignment(Pos.CENTER);
 		hbButton.getChildren().addAll(cancel, register);
@@ -154,7 +152,7 @@ class SceneFeedback extends SceneMain
 		}
 		event.clickCancel(cancel);
 		
-		//シーンの作成
+		//シーンの作成処理
 		this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
 	//-------------------------------------------- 

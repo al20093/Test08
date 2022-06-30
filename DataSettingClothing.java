@@ -1,5 +1,5 @@
 /****************************************/ 
-/*author:西村　美玖 6/27更新 
+/*author:西村　美玖 6/30更新 
 /* 		 佐野　渉 6/29更新
 /*C7:服装情報設定処理部所属 
 /*DataSettingClothing: 
@@ -16,19 +16,21 @@ class DataSettingClothing
 	//-------------------------------------------- 
 	//List<Clothes> getClothes()
 	//ユーザ情報管理部から全ての服装データを取ってくる
+	//List<Clothes>:取得した服装データのリスト
 	//--------------------------------------------
 	List<Clothes> getClothes()
 	{
 		List<Clothes> clothes;
-		//取得する
+		//服装データを取得し服装データリストに格納
 		clothes = new UserData().clothesRead();
 		return clothes;
 	}
 	
 	
 	//-------------------------------------------- 
-	//void addClothes(List<Clothes> clothes)
+	//boolean addClothes(List<Clothes> clothes)
 	//追加した服装情報をファイルに書き込む
+	//boolean:名称の被りがなかった場合true
 	//--------------------------------------------
 	boolean addClothes(Clothes clothes)
 	{
@@ -49,8 +51,7 @@ class DataSettingClothing
 	//Clothes matching(String clothesName)
 	//指定された名称の服装情報を全服装データから
 	//持ってくる
-	//clothesName:全服装データから取り出す服装の
-	//			  名称
+	//clothesName:全服装データから取り出す服装名称
 	//--------------------------------------------
 	Clothes matching(String clothesName)
 	{
@@ -77,6 +78,10 @@ class DataSettingClothing
 		new UserData().clothesDelete(clothes);
 	}
 	
+	//-------------------------------------------- 
+	//int exceptionText(Clothes clothes)
+	//予期せぬ入力に対するエラーケースの分類を行う
+	//--------------------------------------------
 	int exceptionText(Clothes clothes)
 	{
 		//文字数カウント用

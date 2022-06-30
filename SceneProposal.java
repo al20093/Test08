@@ -1,5 +1,6 @@
 /****************************************/ 
-/*author:名久井愛紗 6/28更新 
+/*author:名久井　愛紗 6/28更新 
+/*		 佐野　渉 6/30更新 
 /*C5:服装提案部所属 
 /*SceneProposal: 
 /*服装提案部での画面作成処理を記述する
@@ -28,6 +29,8 @@ import javafx.stage.Stage;
 class SceneProposal extends SceneMain
 {
 	Scene scene;
+	List<Label> lbClothes;
+	List<Label> lbWeather;
 	
 	//-------------------------------------------- 
 	//SceneProposal(Stage stage)
@@ -45,89 +48,56 @@ class SceneProposal extends SceneMain
 	//--------------------------------------------
 	void createArea()
 	{
+		//オブジェクト作成
 		BorderPane bp = new BorderPane();
 		EventProposal event = new EventProposal(this);
-		//ラベルリスト作成
-		List<Label> lb = new ArrayList<Label>();
-		List<Label> lb2 = new ArrayList<Label>();
-		lb.add(new Label("服装提案"));
-		lb.add(new Label("お住まいの地域を入力してください"));
-		for(int i = 0; i < 2; i++)
-		{
-			lb.get(i).setFont(Font.font
-					(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
-		}
-		
-		lb2.add(new Label("地域:"));
-		for(int i = 0; i < 1; i++)
-		{
-			lb2.get(i).setFont(Font.font
-					(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
-		}
-		
-		ListView<String> lv = new ListView<>(); //リストビュー作成
-		//リストビューに地域名を挿入
-		ObservableList<String> items = FXCollections.observableArrayList(
-				"札幌", "釧路", "仙台", "新潟", "東京", "金沢", "名古屋",
-				"大阪", "広島", "高知","福岡", "鹿児島", "那覇");
-		lv.setItems(items);
-		//areaname = lv.getSelectionModel().getSelectedItem();;
-		
+		Label lb = new Label("お住まいの地域を入力してください");
+		//リストビュー作成
+		ListView<String> lv = new ListView<>();
 		//ボタンリスト作成
-		List<Button> bt = new ArrayList<Button>();
-		bt.add(new Button("服装提案開始"));
-		for(int i = 0; i < bt.size(); i++) 
+		List<Button> bt = new ArrayList<Button>()
 		{
-			bt.get(i).setFont(Font.font
-					(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
-		}
+			{
+				add(new Button("キャンセル"));
+				add(new Button("決定"));
+			}
+		};
+		//リストビューに地域名を挿入
+		ObservableList<String> items = FXCollections.observableArrayList
+										(Constant.AREANAMES);
 		
-		List<Button> bt2 = new ArrayList<Button>();
-		bt2.add(new Button("キャンセル"));
-		for(int i = 0; i < bt2.size(); i++)
-		{
-			bt2.get(i).setFont(Font.font
-					(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
-		}
+		lv.setItems(items);
+		//フォント設定
+		lb.setFont(Font.font
+				(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
+		bt.get(0).setFont(Font.font
+				(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
+		bt.get(1).setFont(Font.font
+				(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
 		
 		//ラベルとボタンをVBoxとHBoxに割り当てる
-		//"服装提案"ラベル
-		VBox vb = new VBox();
-		vb.setAlignment(Pos.CENTER);
-		vb.getChildren().addAll(lb);
+		//"服装提案"・"説明"ラベル
+		VBox vbTop = new VBox();
+		vbTop.setAlignment(Pos.CENTER);
+		vbTop.setSpacing(10);
+		vbTop.getChildren().addAll(SceneContents.subTitle("服装提案"), lb);
 		
-		//"地域:"ラベル,リストビュー
-		HBox hb = new HBox();
-		hb.setAlignment(Pos.CENTER);
-		hb.getChildren().addAll(lb2);
-		//hb.getChildren().addAll(names);
-		hb.getChildren().addAll(lv);
-		
-		//"服装提案開始"ボタン
-		VBox vb2 = new VBox();
-		vb2.setAlignment(Pos.BOTTOM_RIGHT);
-		vb2.setPadding(new Insets(10, 10, 10, 10));
-		vb2.setSpacing(30);
-		vb2.getChildren().addAll(bt);
-		
-		//"キャンセル"ボタン		
-		VBox vb3 = new VBox();
-		vb3.setAlignment(Pos.BOTTOM_LEFT);
-		vb3.setPadding(new Insets(10, 10, 10, 10));
-		vb3.setSpacing(30);
-		vb3.getChildren().addAll(bt2);
-		
+		//"キャンセル"・"決定"ボタン		
+		HBox hbBottom = new HBox();
+		hbBottom.setAlignment(Pos.CENTER);
+		hbBottom.setPadding(new Insets(9, 9, 9, 9));
+		hbBottom.setSpacing(171);
+		hbBottom.getChildren().addAll(bt);
 		//ペイン割り当て
-		bp.setTop(vb); //"服装提案"ラベル
-		bp.setRight(vb2); //"地域:"ラベル,リストビュー
-		bp.setLeft(vb3); //"服装提案開始"ボタン
-		bp.setCenter(hb); //"キャンセル"ボタン
+		bp.setTop(vbTop); //"服装提案"・"説明"ラベル
+		bp.setCenter(lv); //リストビュー
+		bp.setBottom(hbBottom);//"キャンセル"・"決定"ボタン
 		
 		//ボタンにイベント割り当て
-		event.transitionResult(bt.get(0), lv); //"服装提案開始"ボタン
-		event.transitionHome(bt2.get(0)); //"キャンセル"ボタン
+		event.transitionHome(bt.get(0)); //"キャンセル"ボタン
+		event.transitionResult(bt.get(1), lv); //"決定"ボタン
 		
-		//シーンの作成
+		//シーンの作成処理
 		scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
 	//-------------------------------------------- 
@@ -138,60 +108,69 @@ class SceneProposal extends SceneMain
 	{
 		BorderPane bp = new BorderPane(); //ボーダーペイン作成
 			
-		//ラベルリスト作成
-		List<Label> lb = new ArrayList<Label>();
-		lb.add(new Label("服装提案"));
-		lb.add(new Label("提案された服装"));
-		for(int i = 0; i < 2; i++)
-		{
-			lb.get(i).setFont(Font.font
-						(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
-		}
+		//メッセージラベル作成
+		Label title = new Label("提案された服装");
+		Label date = new Label("〇月〇日の天候");
 		
-		//提案された服装のラベルリスト作成
-		List<Label> lb2 = new DataProposal().getResult();
-		for(int i = 0; i < lb2.size(); i++)
+		//ラベルフォント設定
+		title.setFont(Font.font
+				(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
+		date.setFont(Font.font
+				(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
+		
+		title.setTranslateX(20);
+		
+		//リストラベル作成
+		lbClothes = new ArrayList<Label>();
+		lbWeather = new ArrayList<Label>();
+		/*//提案された服装のラベルリスト作成
+		List<Label> lbClothes = new DataProposal().getResult();
+		
+		for(int i = 0; i < lbClothes.size(); i++)
 		{
-			lb2.get(i).setFont(Font.font
+			lbClothes.get(i).setFont(Font.font
 						(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
 		}
 		
 		//天気情報を格納しラベルリスト作成
-		String[] st = new DataProposal().getWeather(EventArea.areaname); 
-		List<Label> lb3 = new ArrayList<Label>()
+		String[] weatherData = new DataProposal().getWeather(EventProposal.areaname); 
+		List<Label> lbWeather = new ArrayList<Label>()
 		{
 			{
-				add(new Label(st[0]));
-				add(new Label(st[1]));
-				add(new Label(st[2]));
+				add(new Label(weatherData[0]));
+				add(new Label(weatherData[1]));
+				add(new Label(weatherData[2]));
 			}
 		};
-		for(int i = 0; i < lb3.size(); i++)
+		for(int i = 0; i < lbWeather.size(); i++)
 		{
-			lb3.get(i).setFont(Font.font
+			lbWeather.get(i).setFont(Font.font
 						(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
-		}
+		}*/
 		
 		//ラベルをVBoxとHBoxに割り当てる
 		//"服装提案""提案された服装"ラベル
-		VBox vb = new VBox();
-		vb.setAlignment(Pos.BASELINE_LEFT);
-		vb.getChildren().addAll(lb);
+		VBox vbTop = new VBox();
+		vbTop.setAlignment(Pos.CENTER_LEFT);
+		vbTop.setSpacing(0);
+		vbTop.setPadding(new Insets(0, 0, 0 ,0));
+		vbTop.getChildren().addAll(SceneContents.subTitle("服装提案"), title);
 		
 		//提案された服装のラベル
-		VBox vb2 = new VBox();
-		vb2.setAlignment(Pos.BASELINE_LEFT);
-		vb2.getChildren().addAll(lb2);
+		VBox vbCenter = new VBox();
+		vbCenter.setAlignment(Pos.BASELINE_LEFT);
+		vbCenter.getChildren().addAll(lbClothes);
 		
 		//天気情報のラベル
-		HBox hb = new HBox();
-		hb.setAlignment(Pos.BASELINE_LEFT);
-		hb.getChildren().addAll(lb3);
+		HBox hbBottom = new HBox();
+		hbBottom.setAlignment(Pos.CENTER_LEFT);
+		hbBottom.getChildren().add(date);
+		hbBottom.getChildren().addAll(lbWeather);
 		
 		//ペイン割り当て
-		bp.setTop(vb); //"服装提案""提案された服装"ラベル
-		bp.setCenter(vb2); //提案された服装のラベル
-		bp.setBottom(hb); //天気情報のラベル
+		bp.setTop(vbTop); //"服装提案""提案された服装"ラベル
+		bp.setCenter(vbCenter); //提案された服装のラベル
+		bp.setBottom(hbBottom); //天気情報のラベル
 		
 		//シーンの作成
 		scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);

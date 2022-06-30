@@ -72,6 +72,15 @@ public class Constant {
 	final static String WEBURL = "https://tenki.jp/";
 	//重みの範囲
 	final static double[] WEIGHTRANGE = {0.5, 2.0};
+	//気温の範囲
+	final static double[] TEMPRANGE = {10, 30};
+	//湿度の範囲
+	final static double[] HUMIDITYRANGE = {0, 55, 100};
+	//体部位名称
+	final static String[] PARTNAME = {"頭", "手", "上半身", "下半身", "足"};
+	//地域名の集合
+	final static String[] AREANAMES = {"札幌", "釧路", "仙台", "新潟", "東京", "金沢", "名古屋",
+										"大阪", "広島", "高知","福岡", "鹿児島", "那覇"};
 	
 	//アラート画面に表示するメッセージ
 	//キャンセル時メッセージ
@@ -96,6 +105,8 @@ public class Constant {
 	final static String ADDCLOTHESERROR = "すでに同じ名称の服装が登録されています。";
 	//ラジオボタン未選択エラー
 	final static String EMPTYRADIOERROR = "ラジオボタンが未選択です。";
+	//地域名未選択エラー
+	final static String EMPTYAREAERROR = "地域名が未選択です。";
 	//不明エラー
 	final static String UNKNOWNERROR = "原因不明なエラーです。";
 	

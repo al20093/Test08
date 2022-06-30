@@ -33,21 +33,27 @@ public class EventProposal
 	{
 		bt.setOnAction((ActionEvent) ->
 			{ 
-				try {
+				try 
+				{
 					area.assignSceneToStage("clothing"); //W6服装提案画面に遷移
 					//String areaname;
 					//areaname = lv.getItems(items);
 					areaname = lv.getSelectionModel().getSelectedItem(); //選択された地域名称を取得
 					List<Clothes> result = new DataProposal().getClothes(areaname); //地域名称から天気情報を取得し提案された服装を格納
-					new DataProposal().orderList(result); //データリスト取得
-				}catch(Exception e) {
-					new CreateAlert().failure("ERROR"); //地域名称が選択されていなかった場合、エラーのアラート表示
+					new DataProposal().orderList(result); //服装データリスト作成
+				} catch(ArrayIndexOutOfBoundsException e) {
+					//地域名称が選択されていなかった場合、エラーのアラート表示
+					new CreateAlert().failure(Constant.EMPTYAREAERROR);
+				} catch (Exception e) {
+					//それ以外の場合
+					new CreateAlert().failure(Constant.UNKNOWNERROR);
+					e.printStackTrace();
 				}
 			});
 	}
 	
 	//-----------------------------------------------------
-	//void transitionResult(Button bt, ListView<String> lv) 
+	//void transitionResult(Button bt) 
 	//"キャンセル"ボタンが押されたら
 	//W5地域入力画面作成からW4ホーム画面に遷移
 	//bt:"服装提案"ボタン

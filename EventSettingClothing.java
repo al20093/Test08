@@ -18,17 +18,32 @@ public class EventSettingClothing
 {
 	SceneSettingClothing settingClothing;
 	
+	//-------------------------------------------- 
+	//EventSettingClothing(SceneFeedback feedback)
+	//画面作成部のインスタンスを受け取るコンストラクタ
+	//settingClothing:画面作成部のインスタンス
+	//--------------------------------------------
 	EventSettingClothing(SceneSettingClothing settingclothing)
 	{
 		this.settingClothing = settingclothing;
 	}
 	
+	//-------------------------------------------- 
+	//void clickCancel(Button cancel)
+	//キャンセルを押した時に実行するイベント処理
+	//cancel:キャンセルボタン
+	//--------------------------------------------
 	void clickCancel(Button cancel)
 	{
 		cancel.setOnAction((ActionEvent) ->
 		{ settingClothing.assignSceneToStage("preference"); }); //キャンセルボタンを押したらW10画面へ遷移
 	}
 	
+	//-------------------------------------------- 
+	//void clickRegister1(Button register, List<TextField> tf)
+	//服装追加モードで登録を押した時に実行するイベント処理
+	//register:登録ボタン tf:4つのテキストフィールド
+	//--------------------------------------------
 	void clickRegister1(Button register, List<TextField> tf)
 	{
 		register.setOnAction((ActionEvent) -> 
@@ -84,6 +99,11 @@ public class EventSettingClothing
 		}); 
 	}
 	
+	//-------------------------------------------- 
+	//void clickRegister2(Button register)
+	//服装削除モードで登録を押した時に実行するイベント処理
+	//register:登録ボタン
+	//--------------------------------------------
 	void clickRegister2(Button register)
 	{
 		register.setOnAction((ActionEvent) -> 
@@ -106,18 +126,26 @@ public class EventSettingClothing
 				{
 					for(int i = 0; i < ol.size(); i++)
 					{
+						//リストビューから削除
 						if(ol.get(i).equals(clothes.name)) ol.remove(i);
 					}
+					//DBから服装データを削除する
 					new DataSettingClothing().deleteClothes(clothes);
+					//削除完了アラート表示
 					new CreateAlert().complete(Constant.DELETECOMPLETE);
 				}
-			} catch(Exception e) {
+			} catch(Exception e) { //例外処理
 				new CreateAlert().failure(Constant.UNKNOWNERROR);
 				e.printStackTrace();
 			}
 		}); 
 	}
 	
+	//-------------------------------------------- 
+	//void clickDelete(Button delete)
+	//削除ボタンが選択された時に実行するイベント処理(モード変更)
+	//delete:削除ボタン
+	//--------------------------------------------
 	void clickDelete(Button delete)
 	{
 		delete.setOnAction((ActionEvent) ->
@@ -127,6 +155,11 @@ public class EventSettingClothing
 		});
 	}
 	
+	//-------------------------------------------- 
+	//void clickAddition(Button add)
+	//追加ボタンが選択された時に実行するイベント処理(モード変更)
+	//add:登録ボタン
+	//--------------------------------------------
 	void clickAddition(Button add)
 	{
 		add.setOnAction((ActionEvent) ->
