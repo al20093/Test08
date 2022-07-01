@@ -25,6 +25,7 @@ public class DataProposal
 	//--------------------------------------------
 	String[] getWeather(String area)
 	{
+
 		ControlWeb web = new ControlWeb(area); //地域名から天気情報を取得
 		String[] getweather = new String[3]; //気温・湿度・天気の順に格納する配列
 		getweather[0] = web.aveTemp();
@@ -37,17 +38,15 @@ public class DataProposal
 	//-------------------------------------------- 
 	//List<Clothes> getClothes(String area) 
 	////服装データ要求
-	//area:地域名
+	//weatherData:電気情報
 	//--------------------------------------------
-	List<Clothes> getClothes(String area)
+	List<Clothes> getClothes(String[] weatherData)
 	{
 		//ユーザ情報の服装データを格納
 		List<Clothes> clothes = new UserData().clothesRead(); 
-		//天気情報を要求
-		String[] weatherdata = getWeather(area);
 		//服装指数の計算結果
-		double[] index = calculateIndex(Double.parseDouble(weatherdata[0]),
-				Double.parseDouble(weatherdata[1]), getWeight());
+		double[] index = calculateIndex(Double.parseDouble(weatherData[0]),
+				Double.parseDouble(weatherData[1]), getWeight());
 		
 		//5つ提案された服装を格納
 		List<Clothes> result = new ArrayList<Clothes>();
@@ -164,5 +163,15 @@ public class DataProposal
 		}
 		
 		return resultName;	
+	}
+	
+	//-------------------------------------------- 																																																																																																																																																												//void flagReset()//-------------------------------------------- 
+	//void flagOn()
+	//フィードバックフラグをONにする
+	//--------------------------------------------
+	void flagOn()
+	{
+		//フィードバックフラグを有効にする
+		new UserData().flagWrite(true);
 	}
 }

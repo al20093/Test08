@@ -107,6 +107,8 @@ public class Constant {
 	final static String EMPTYRADIOERROR = "ラジオボタンが未選択です。";
 	//地域名未選択エラー
 	final static String EMPTYAREAERROR = "地域名が未選択です。";
+	//インターネット接続エラー
+	final static String INTERNETERROR = "インターネットが未接続です。";
 	//不明エラー
 	final static String UNKNOWNERROR = "原因不明なエラーです。";
 	
