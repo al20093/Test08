@@ -1,6 +1,6 @@
 /****************************************/ 
 /*author:名久井　愛紗 6/28更新 
-/*		 佐野　渉 6/30更新 
+/*		 佐野　渉 7/01更新 
 /*C5:服装提案部所属 
 /*SceneProposal: 
 /*服装提案部での画面作成処理を記述する
@@ -8,6 +8,8 @@
 
 package application;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -29,8 +32,9 @@ import javafx.stage.Stage;
 class SceneProposal extends SceneMain
 {
 	Scene scene;
-	List<Label> lbClothes;
-	List<Label> lbWeather;
+	static BorderPane bpProposal;
+	static List<Label> lbClothes;
+	static List<Label> lbWeather;
 	
 	//-------------------------------------------- 
 	//SceneProposal(Stage stage)
@@ -94,7 +98,7 @@ class SceneProposal extends SceneMain
 		bp.setBottom(hbBottom);//"キャンセル"・"決定"ボタン
 		
 		//ボタンにイベント割り当て
-		event.transitionHome(bt.get(0)); //"キャンセル"ボタン
+		event.clickCancel(bt.get(0)); //"キャンセル"ボタン
 		event.transitionResult(bt.get(1), lv); //"決定"ボタン
 		
 		//シーンの作成処理
@@ -106,16 +110,16 @@ class SceneProposal extends SceneMain
 	//--------------------------------------------
 	void createProposal()
 	{
-		BorderPane bp = new BorderPane(); //ボーダーペイン作成
+		//イベントオブジェクト作成
+		EventProposal event = new EventProposal(this);
+		//ボーダーペイン作成
+		bpProposal = new BorderPane();
 			
 		//メッセージラベル作成
 		Label title = new Label("提案された服装");
-		Label date = new Label("〇月〇日の天候");
 		
 		//ラベルフォント設定
 		title.setFont(Font.font
-				(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
-		date.setFont(Font.font
 				(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
 		
 		title.setTranslateX(20);
@@ -123,31 +127,7 @@ class SceneProposal extends SceneMain
 		//リストラベル作成
 		lbClothes = new ArrayList<Label>();
 		lbWeather = new ArrayList<Label>();
-		/*//提案された服装のラベルリスト作成
-		List<Label> lbClothes = new DataProposal().getResult();
-		
-		for(int i = 0; i < lbClothes.size(); i++)
-		{
-			lbClothes.get(i).setFont(Font.font
-						(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
-		}
-		
-		//天気情報を格納しラベルリスト作成
-		String[] weatherData = new DataProposal().getWeather(EventProposal.areaname); 
-		List<Label> lbWeather = new ArrayList<Label>()
-		{
-			{
-				add(new Label(weatherData[0]));
-				add(new Label(weatherData[1]));
-				add(new Label(weatherData[2]));
-			}
-		};
-		for(int i = 0; i < lbWeather.size(); i++)
-		{
-			lbWeather.get(i).setFont(Font.font
-						(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
-		}*/
-		
+
 		//ラベルをVBoxとHBoxに割り当てる
 		//"服装提案""提案された服装"ラベル
 		VBox vbTop = new VBox();
@@ -156,24 +136,14 @@ class SceneProposal extends SceneMain
 		vbTop.setPadding(new Insets(0, 0, 0 ,0));
 		vbTop.getChildren().addAll(SceneContents.subTitle("服装提案"), title);
 		
-		//提案された服装のラベル
-		VBox vbCenter = new VBox();
-		vbCenter.setAlignment(Pos.BASELINE_LEFT);
-		vbCenter.getChildren().addAll(lbClothes);
-		
-		//天気情報のラベル
-		HBox hbBottom = new HBox();
-		hbBottom.setAlignment(Pos.CENTER_LEFT);
-		hbBottom.getChildren().add(date);
-		hbBottom.getChildren().addAll(lbWeather);
-		
 		//ペイン割り当て
-		bp.setTop(vbTop); //"服装提案""提案された服装"ラベル
-		bp.setCenter(vbCenter); //提案された服装のラベル
-		bp.setBottom(hbBottom); //天気情報のラベル
+		bpProposal.setTop(vbTop); //"服装提案""提案された服装"ラベル
 		
 		//シーンの作成
-		scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
+		scene = new Scene(bpProposal, Constant.WIDTH, Constant.HEIGHT);
+		
+		//イベント割り当て
+		event.clickWindow();
 	}
 	//-------------------------------------------- 
 	//void getScene()
@@ -184,6 +154,104 @@ class SceneProposal extends SceneMain
 	Scene getScene()
 	{
 		return scene;
-	}	
+	}
 	
+	//-------------------------------------------- 
+	//void assignPane()
+	//提案する服装と天候情報のラベルを
+	//ペインに反映する
+	//--------------------------------------------
+	void assignPane()
+	{
+		//日付情報取得
+		String strDate = new SimpleDateFormat("MM月dd日").format(new Date());	
+		
+		//天気情報ラベルを作成
+		Label date = new Label(strDate + "の天候");
+		date.setFont(Font.font
+				(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));
+		
+		//提案された服装のラベル
+		VBox vbCenter = new VBox();
+		vbCenter.setAlignment(Pos.BASELINE_LEFT);
+		vbCenter.getChildren().addAll(lbClothes);
+		vbCenter.setTranslateX(20);
+		
+		//天気情報のラベル
+		GridPane gpWeather = new GridPane();
+		gpWeather.setPadding(new Insets(10, 10, 10, 10));
+		gpWeather.setVgap(5);
+		gpWeather.setHgap(70);
+		gpWeather.setAlignment(Pos.CENTER);
+		
+		//グリッドペインに天気情報ラベルを割り当てる
+		for(int i = 0; i < lbWeather.size(); ++i)
+		{
+			gpWeather.add(lbWeather.get(i), i % (lbWeather.size() / 2), i / (lbWeather.size() / 2));
+		}
+		
+		//画面下部のラベル
+		VBox vbBottom = new VBox();
+		vbBottom.setAlignment(Pos.CENTER_LEFT);
+		vbBottom.getChildren().add(date);
+		vbBottom.getChildren().addAll(gpWeather);
+		date.setTranslateX(20);
+		
+		bpProposal.setCenter(vbCenter); //提案された服装のラベル
+		bpProposal.setBottom(vbBottom); //天気情報のラベル
+	}
+	
+	//-------------------------------------------- 
+	//void setClothes(List<Clothes> clothes)
+	//ラベルリストに提案する服装の名称を追加する
+	//clothes:追加する服装のリスト
+	//--------------------------------------------
+	void setClothes(List<Clothes> clothes)
+	{
+		//ラベルリストにラベル追加
+		for(int i = 0; i < clothes.size(); ++i)
+		{
+			lbClothes.add(new Label("・" + clothes.get(i).name));
+			//フォント設定
+			lbClothes.get(i).setFont(Font.font
+					(Constant.FONTFAMILY,Constant.FONTWEIGHT,25));;
+		}
+	}
+	
+	//-------------------------------------------- 
+	//void setWeather(String[] weatherData)
+	//ラベルリストに天気情報を追加する
+	//weatherData:天気情報を格納した配列
+	//--------------------------------------------
+	void setWeather(String[] weatherData)
+	{
+		//ラベルリストにラベル追加
+		lbWeather.add(new Label("平均気温"));
+		lbWeather.add(new Label("湿度"));
+		lbWeather.add(new Label("天気"));
+		lbWeather.add(new Label(weatherData[0] + "℃"));
+		lbWeather.add(new Label(weatherData[1] + "％"));
+		lbWeather.add(new Label(weatherData[2]));
+		//フォント設定
+		for(int i = 0; i < weatherData.length * 2; ++i)
+		{
+			lbWeather.get(i).setFont(Font.font
+					(Constant.FONTFAMILY,Constant.FONTWEIGHT,20));
+		}
+	}
+	
+	//-------------------------------------------- 
+	//void resetList
+	//ラベルリストを初期化する
+	//--------------------------------------------
+	void resetList()
+	{
+		lbClothes.clear();
+		lbWeather.clear();
+	}
+	
+	List<Label> getClothes()
+	{
+		return lbClothes; 
+	}
 }

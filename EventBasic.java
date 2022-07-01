@@ -42,6 +42,8 @@ class EventBasic {
 			{ 
 				if(new UserData().flagRead())
 				{
+					//ペイン割り当て
+					new SceneFeedback(basic.getStage()).assignPane();
 					basic.assignSceneToStage("feedback");
 				} else {
 					new CreateAlert().complete(Constant.FLAGMESSAGE);

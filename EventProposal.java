@@ -1,5 +1,6 @@
 /****************************************/ 
-/*author:名久井愛紗 6/28更新 
+/*author:名久井　愛紗 6/28更新 
+/*		 佐野　渉 7/01更新 
 /*C5:服装提案部所属 
 /*EventProposal: 
 /*服装提案部でのイベント処理を記述する
@@ -11,16 +12,17 @@ import java.util.List;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 
 public class EventProposal
 {
-	SceneProposal area;
-	static String areaname; //地域名
+	SceneProposal proposal;
+	static String areaName; //地域名
 	
 	//コンストラクタ
-	EventProposal(SceneProposal area)
+	EventProposal(SceneProposal proposal)
 	{
-		this.area = area;
+		this.proposal = proposal;
 	}
 	
 	//-----------------------------------------------------
@@ -35,12 +37,22 @@ public class EventProposal
 			{ 
 				try 
 				{
-					area.assignSceneToStage("clothing"); //W6服装提案画面に遷移
+					proposal.assignSceneToStage("clothing"); //W6服装提案画面に遷移
 					//String areaname;
 					//areaname = lv.getItems(items);
-					areaname = lv.getSelectionModel().getSelectedItem(); //選択された地域名称を取得
-					List<Clothes> result = new DataProposal().getClothes(areaname); //地域名称から天気情報を取得し提案された服装を格納
-					new DataProposal().orderList(result); //服装データリスト作成
+					//選択された地域名称を取得
+					areaName = lv.getSelectionModel().getSelectedItem();
+					String[] weatherData = new DataProposal().getWeather(areaName);
+					//地域名称から天気情報を取得し提案された服装を格納
+					List<Clothes> result = new DataProposal().getClothes(weatherData);
+					//提案服装の名称をシーンのラベルリストに格納する
+					proposal.setClothes(result);
+					//天気情報をシーンのラベルリストに格納する
+					proposal.setWeather(weatherData);
+					//シーンに画面を反映する
+					proposal.assignPane();
+					//服装データリスト作成
+					new DataProposal().orderList(result);
 				} catch(ArrayIndexOutOfBoundsException e) {
 					//地域名称が選択されていなかった場合、エラーのアラート表示
 					new CreateAlert().failure(Constant.EMPTYAREAERROR);
@@ -53,14 +65,32 @@ public class EventProposal
 	}
 	
 	//-----------------------------------------------------
-	//void transitionResult(Button bt) 
+	//void clickWindow()
+	//画面がクリックされたら
+	//W6服装提案画面からW4ホーム画面に遷移
+	//-----------------------------------------------------
+	void clickWindow()
+	{
+		proposal.getScene().addEventHandler(MouseEvent.MOUSE_CLICKED, 
+			(MouseEvent) -> 
+				{
+					proposal.assignSceneToStage("home");
+					//画面に表示する服装一覧と天気情報をクリアする
+					proposal.resetList();
+					//フィードバックフラグをONにする
+					new DataProposal().flagOn();
+				});
+	}
+	
+	//-----------------------------------------------------
+	//void clickCancel(Button bt) 
 	//"キャンセル"ボタンが押されたら
 	//W5地域入力画面作成からW4ホーム画面に遷移
 	//bt:"服装提案"ボタン
 	//-----------------------------------------------------
-	void transitionHome(Button bt)
+	void clickCancel(Button bt)
 	{
 		bt.setOnAction((ActionEvent) ->
-			{ area.assignSceneToStage("home"); }); //W4ホーム画面に遷移
+			{ proposal.assignSceneToStage("home"); }); //W4ホーム画面に遷移
 	}
 }

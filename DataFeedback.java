@@ -80,7 +80,7 @@ public class DataFeedback
 	//--------------------------------------------
 	void flagReset()
 	{
-		//フィードバックフラグをfalseに戻す
+		//フィードバックフラグを無効に戻す
 		new UserData().flagWrite(false);
 	}
 }

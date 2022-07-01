@@ -60,7 +60,7 @@ class EventFeedback
 	//size:提案された服装の数
 	//labelList:服装名称
 	//--------------------------------------------
-	void clickRegister(Button register, int size, List<Label> labelList)
+	void clickRegister(Button register, List<Label> labelList)
 	{
 		
 		register.setOnAction((ActionEvent) ->
@@ -75,7 +75,7 @@ class EventFeedback
 				radioValue.add(tempValue); //ラジオボタンの値を保存
 			}
 				
-			if(counter == size)  //提案された服装分評価した場合
+			if(counter == labelList.size() + 1)  //提案された服装分評価した場合
 			{
 				labelList.get(counter - 2).setTextFill(Color.BLACK);
 				DataFeedback df = new DataFeedback();

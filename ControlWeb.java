@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 class ControlWeb 
 {
@@ -18,7 +19,7 @@ class ControlWeb
 	int hum; 		//湿度
 	String weather; //天気
 	
-	ControlWeb(String area) 
+	ControlWeb(String area)
 	{
 		
 		BufferedReader br = null;
@@ -50,16 +51,16 @@ class ControlWeb
 	        		break;
 	        	}
 	        }
-		} catch (IOException e) 
-		{
+		} catch(UnknownHostException e) {
+			//インターネット接続がされていない場合
+			new CreateAlert().failure(Constant.INTERNETERROR);
+		} catch(IOException e) {
 			e.printStackTrace();
-	    } finally 
-		{
+	    } finally {
 	    	try 
 	    	{
 	    		br.close();
-	    	} catch (IOException e)
-	    	{
+	    	} catch(IOException e) {
 	    		e.printStackTrace();
 	    	}
 	    }
