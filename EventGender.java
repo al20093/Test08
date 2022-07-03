@@ -73,15 +73,11 @@ public class EventGender
 	{
 		bt.setOnAction((ActionEvent) ->
 		{ 
-			boolean check = new CreateAlert().confirm(Constant.CANCELMESSAGE);
-			if(check == true)
+			if(new DataGender().getBoot())
 			{
-				if(new DataGender().getBoot())
-				{
-					gender.assignSceneToStage("preference");
-				} else {
-					gender.assignSceneToStage("initial");
-				}
+				gender.assignSceneToStage("preference");
+			} else {
+				gender.assignSceneToStage("initial");
 			}
 		});
 	}

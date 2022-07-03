@@ -116,13 +116,19 @@ public class EventSettingClothing
 				String name;
 				//選択されたリストビューの項目名を格納
 				deleteClothing = lv.getSelectionModel().getSelectedItem();
+				//何も選択されていない場合
+				if(deleteClothing == null)
+				{
+					new CreateAlert().failure(Constant.DELETECLOTHEERROR);
+					return;
+				}
 				//名前を取り出す
 				name = deleteClothing;
 				//データ処理部を呼び出す,消すアイテムをclothesにいれる
 				Clothes clothes = new DataSettingClothing().matching(name);
 				//登録完了アラート画面表示
-				boolean check = new CreateAlert().confirm(Constant.DELETEQUESTION);
-				if(check == true)
+				boolean completeCheck = new CreateAlert().confirm(Constant.DELETEQUESTION);
+				if(completeCheck)
 				{
 					for(int i = 0; i < ol.size(); i++)
 					{

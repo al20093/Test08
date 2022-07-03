@@ -37,22 +37,34 @@ public class EventProposal
 			{ 
 				try 
 				{
-					proposal.assignSceneToStage("clothing"); //W6服装提案画面に遷移
-					//String areaname;
-					//areaname = lv.getItems(items);
 					//選択された地域名称を取得
 					areaName = lv.getSelectionModel().getSelectedItem();
-					String[] weatherData = new DataProposal().getWeather(areaName);
-					//地域名称から天気情報を取得し提案された服装を格納
-					List<Clothes> result = new DataProposal().getClothes(weatherData);
-					//提案服装の名称をシーンのラベルリストに格納する
-					proposal.setClothes(result);
-					//天気情報をシーンのラベルリストに格納する
-					proposal.setWeather(weatherData);
-					//シーンに画面を反映する
-					proposal.assignPane();
-					//服装データリスト作成
-					new DataProposal().orderList(result);
+					//地域名が選択されていない場合
+					if(areaName == null)
+					{
+						new CreateAlert().failure(Constant.EMPTYAREAERROR);
+						return;
+					}
+					boolean check = new CreateAlert().confirm(Constant.PROPOSALCONFIRM);
+					if(check)
+					{
+						//天気情報を取得
+						String[] weatherData = new DataProposal().getWeather(areaName);
+						//天気情報から提案された服装を格納
+						List<Clothes> result = new DataProposal().getClothes(weatherData);
+						//提案服装の名称をシーンのラベルリストに格納する
+						proposal.setClothes(result);
+						//天気情報をシーンのラベルリストに格納する
+						proposal.setWeather(weatherData);
+						//シーンに画面を反映する
+						proposal.assignPane();
+						//服装データリスト作成
+						new DataProposal().orderList(result);
+						//W6服装提案画面に遷移
+						proposal.assignSceneToStage("clothing");
+					} else {
+						return;
+					}
 				} catch(ArrayIndexOutOfBoundsException e) {
 					//地域名称が選択されていなかった場合、エラーのアラート表示
 					new CreateAlert().failure(Constant.EMPTYAREAERROR);

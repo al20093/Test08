@@ -9,6 +9,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.scene.control.Label;
@@ -57,7 +58,7 @@ public class DataProposal
 		
 		//部位ごとに、服装に割り当てられた服装指数と計算結果から出た服装指数の差を求め、
 		//差の小さいものを提案する
-		for(int x = 0; x < 5; x++)
+		for(int x = 0; x < Constant.PARTNAME.length; x++)
 		{
 			for(int i = 0; i < clothes.size(); i++)
 			{
@@ -144,7 +145,6 @@ public class DataProposal
 												Constant.WEIGHTRANGE[1]);
 			index[i] *= getWeight.get(i);
 		}
-		
 		return index;
 	}
 

@@ -47,8 +47,11 @@ class EventFeedback
 	{
 		cancel.setOnAction((ActionEvent) ->
 		{ 
-			new CreateAlert().confirm(Constant.CANCELMESSAGE);
-			feedback.assignSceneToStage("home"); 
+			boolean check = new CreateAlert().confirm(Constant.CANCELMESSAGE);
+			if(check)
+			{
+				feedback.assignSceneToStage("home");
+			}
 		}); //キャンセルボタンを押したらW4画面へ遷移
 	}
 	

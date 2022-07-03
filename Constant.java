@@ -64,18 +64,18 @@ public class Constant {
 	//JSONファイルパス
 	final static String JSONPATH = "./data.json";
 	//DBファイルパス
-	final static String DBPATH = "user.sqlite3";
+	final static String DBPATH = "./user.sqlite3";
 	//DBのテーブル名
 	final static String TABLENAME1 = "clothes";
 	final static String TABLENAME2 = "clist";
 	//WebのURL
 	final static String WEBURL = "https://tenki.jp/";
 	//重みの範囲
-	final static double[] WEIGHTRANGE = {0.5, 2.0};
+	final static double[] WEIGHTRANGE = {1.15, 0.86};
 	//気温の範囲
 	final static double[] TEMPRANGE = {10, 30};
 	//湿度の範囲
-	final static double[] HUMIDITYRANGE = {0, 55, 100};
+	final static double[] HUMIDITYRANGE = {100, 55, 0};
 	//体部位名称
 	final static String[] PARTNAME = {"頭", "手", "上半身", "下半身", "足"};
 	//地域名の集合
@@ -91,6 +91,8 @@ public class Constant {
 	final static String DELETEQUESTION = "本当に削除しますか？";
 	//削除時メッセージ
 	final static String DELETECOMPLETE = "削除が完了しました。";
+	//服装提案時確認メッセージ
+	final static String PROPOSALCONFIRM = "服装提案を行いますか？";
 	//名称エラー
 	final static String NAMEERROR = "名称は１６文字以内で入力してください。";
 	//服装分類エラー
@@ -103,6 +105,8 @@ public class Constant {
 	final static String EMPTYERROR = "入力欄には何かしらの値を入れる必要があります。";
 	//服装追加時エラー
 	final static String ADDCLOTHESERROR = "すでに同じ名称の服装が登録されています。";
+	//服装削除時エラー
+	final static String DELETECLOTHEERROR = "服装が未選択です。";
 	//ラジオボタン未選択エラー
 	final static String EMPTYRADIOERROR = "ラジオボタンが未選択です。";
 	//地域名未選択エラー
