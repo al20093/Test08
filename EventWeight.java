@@ -27,12 +27,15 @@ public class EventWeight
 	{
 		bt.setOnAction((ActionEvent) ->
 		{ 
-			new CreateAlert().confirm(Constant.CANCELMESSAGE);
-			if(new DataWeight().getBoot())
+			boolean check = new CreateAlert().confirm(Constant.CANCELMESSAGE);
+			if(check)
 			{
-				weight.assignSceneToStage("preference");
-			} else {
-				weight.assignSceneToStage("gender");
+				if(new DataWeight().getBoot())
+				{
+					weight.assignSceneToStage("preference");
+				} else {
+					weight.assignSceneToStage("gender");
+				}
 			}
 		});
 	}
@@ -47,7 +50,7 @@ public class EventWeight
 				wdata.add(Integer.parseInt(chtf.get(i).getText()));
 			}
 			new DataWeight().weightSave(wdata);
-			new CreateAlert().complete("重みの登録が完了しました。");
+			new CreateAlert().complete(Constant.REGISTERMESSAGE);
 			if(new DataWeight().getBoot())
 			{
 				weight.assignSceneToStage("preference");
