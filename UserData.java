@@ -1,8 +1,9 @@
 /**********************************************/
-/*author:金　東柱 6/25更新
+/*author:金　東柱 7/5更新
+/*		:佐野　渉 06/27更新 
 /*C9:ユーザ情報管理部
 /*UserData:
-/*ユーザ情報を処理を記述したクラス
+/*ユーザ情報の入出力処理を記述したクラス
 /**********************************************/
 
 package application;
@@ -24,18 +25,79 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class UserData 
+class UserData 
 {
+	private static Connection con = null;
+	private static JSONObject jsonObj;
 	
-	void genderWrite(boolean gender)
+	//---------------------------------------------------
+	//UserData()
+	//jsonObjを初期化するコンストラクタ
+	//---------------------------------------------------
+	UserData()
 	{
-		JSONObject obj = new JSONObject();
-		obj.put("gender", gender);
-		
+		//UserDataが初めて呼び出されたとき
+		if(jsonObj == null)
+		{
+			//jsonObjの初期化を行う
+			jsonObj = jsonRead();
+		}
+	}
+	
+	//--------------------------------------------
+	//boolean writeBoot()
+	//初起動のフラグをJSONファイルに書き込むメソッド
+	//boot:初期起動フラグ
+	//--------------------------------------------
+	void writeBoot(boolean boot)
+	{
+		jsonObj.put("boot", boot);
+		jsonWrite();
+	}
+	
+	//--------------------------------------------
+	//boolean checkBoot()
+	//初起動かどうかチェックするメソッド
+	//boolean:初起動のときfalse
+	//--------------------------------------------
+	boolean checkBoot()
+	{
+		return (boolean)jsonObj.get("boot");
+	}
+	
+	//---------------------------------------------
+	//void defaultWrite()
+	//外部ファイルにデフォルトの値を格納するメソッド
+	//---------------------------------------------
+	void defaultWrite()
+	{
+		//デフォルト設定書き込み
+		//性別
+		jsonObj.put("gender", Constant.GENDER);
+		//重み
+		jsonObj.put("weight", Constant.WEIGHT);
+		//フィードバックフラグ
+		jsonObj.put("flag", false);
+		//服装データ
+		clothesReset(); //DBテーブル初期化
+		for(int i = 0; i < Constant.CLOTHES.size(); ++i)
+		{
+			clothesWrite(Constant.CLOTHES.get(i));
+		}
+		//JSON書き込み
+		jsonWrite();
+	}
+	
+	//---------------------------------------------
+	//void jsonWrite()
+	//JSONファイルに書き込みを行うメソッド
+	//---------------------------------------------
+	void jsonWrite()
+	{
 		try
 		{
-			FileWriter file = new FileWriter("./data.json");
-			file.write(obj.toJSONString());
+			FileWriter file = new FileWriter(Constant.JSONPATH);
+			file.write(jsonObj.toJSONString());
 			file.flush();
 			file.close();
 		} catch(IOException e) {
@@ -43,108 +105,147 @@ public class UserData
 		}
 	}
 	
-	boolean genderRead()
+	//---------------------------------------------
+	//void jsonRead()
+	//JSONファイルの読出しを行うメソッド
+	//obj:jsonファイルの内容をJSONオブジェクトとして
+	//	　取得する
+	//---------------------------------------------
+	JSONObject jsonRead()
 	{
 		JSONObject obj = new JSONObject();
 		JSONParser parser = new JSONParser();
-		boolean gender = true;
 		try 
 		{
-			FileReader reader = new FileReader("./data.json");
+			FileReader reader = new FileReader(Constant.JSONPATH);
 			obj = (JSONObject)parser.parse(reader);
-			gender = (boolean)obj.get("gender");
-			
 			reader.close();
 		} catch(IOException | ParseException e) {
 			e.printStackTrace();
 		}
-		return gender;
+		return obj;
 	}
 	
-	void weightWrite(ArrayList<Double> weight)
+	//---------------------------------------------------
+	//void arrayRead()
+	//JSONのリスト形式をDouble型リストに変換するメソッド
+	//key:JSONファイルから取り出すリストのキー
+	//result:JSONリスト形式から変換されたDouble型リスト
+	//---------------------------------------------------
+	List<Double> arrayRead(String key)
 	{
-		JSONObject obj = new JSONObject();
-		obj.put("weight", weight);
+		List<Double> result = new ArrayList<Double>();
+		JSONArray arr = (JSONArray)jsonRead().get(key);
 		
-		try
+		if(arr != null)
 		{
-			FileWriter file = new FileWriter("./data.json");
-			file.write(obj.toJSONString());
-			file.flush();
-			file.close();
-		} catch(IOException e) {
-			e.printStackTrace();
+			for(int i = 0; i < arr.size(); ++i)
+			{
+				result.add((Double)arr.get(i));
+			}
 		}
+		return result;
+	}
+
+	//---------------------------------------------------
+	//void flagWrite(boolean flag)
+	//フィードバックを行ったかを示すフィードバックフラグ
+	//をJSONファイルに書き込むメソッド
+	//flag:書き込むフィードバックフラグの状態
+	//	   false:フィードバック不可
+	//	   true:フィードバック可能
+	//---------------------------------------------------
+	void flagWrite(boolean flag)
+	{
+		jsonObj.put("flag", flag);
+		jsonWrite();
 	}
 	
+	//---------------------------------------------------
+	//void flagRead()
+	//フィードバックを行ったかを示すフィードバックフラグ
+	//をJSONファイルから読み込むメソッド
+	//boolean:読み込んだフィードバックフラグの状態
+	//---------------------------------------------------
+	boolean flagRead()
+	{
+		return (boolean)jsonRead().get("flag");
+	}
+	
+	//---------------------------------------------------
+	//void genderWrite(boolean gender)
+	//性別処理部で入力された性別をJSONファイルに
+	//書き込むメソッド
+	//gender:書き込む性別の状態
+	//---------------------------------------------------
+	void genderWrite(boolean gender)
+	{
+		jsonObj.put("gender", gender);
+		jsonWrite();
+	}
+	
+	//---------------------------------------------------
+	//boolean genderRead()
+	//性別処理部で入力された性別をJSONファイルから
+	//読み込むメソッド
+	//boolean:読み込んだ性別の状態
+	//---------------------------------------------------
+	boolean genderRead()
+	{
+		return (boolean)jsonRead().get("gender");
+	}
+	
+	//---------------------------------------------------
+	//void weightWrite(List<Double> weight)
+	//重み処理部で入力された重みをJSONファイルに
+	//書き込むメソッド
+	//weight:書き込む重みのリスト
+	//---------------------------------------------------
+	void weightWrite(List<Double> weight)
+	{
+		jsonObj.put("weight", weight);
+		jsonWrite();
+	}
+	
+	//---------------------------------------------------
+	//List<Double> weightRead()
+	//重み処理部で入力された重みをJSONファイルから
+	//読み込むメソッド
+	//weight:読み込む重みのリスト
+	//---------------------------------------------------
 	List<Double> weightRead()
 	{
-		JSONObject obj = new JSONObject();
-		JSONParser parser = new JSONParser();
-		List<Double> weightRead = new ArrayList<Double>();
-		try
-		{
-			FileReader reader = new FileReader("./data.json");
-			obj = (JSONObject)parser.parse(reader);
-			JSONArray weightData = (JSONArray)obj.get("weight");
-			if(weightData != null) 
-			{
-				for(int i=0; i<weightData.size(); i++) 
-				{
-					weightRead.add((double)weightData.get(i));
-				}
-			}
-			
-			reader.close();
-		} catch(IOException | ParseException e) {
-			e.printStackTrace();
-		}
-		return weightRead;
-	}
-	void feedbackWrite(ArrayList<Double> feedback)
-	{
-		JSONObject obj = new JSONObject();
-		obj.put("feedback", feedback);
-		
-		try
-		{
-			FileWriter file = new FileWriter("./data.json");
-			file.write(obj.toJSONString());
-			file.flush();
-			file.close();
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		return arrayRead("weight");
 	}
 	
+	//---------------------------------------------------
+	//void feedbackWrite(List<Double> feedback)
+	//フィードバック処理部で入力されたフィードバック
+	//をJSONファイルに書き込むメソッド
+	//feedback:書き込むフィードバックのリスト
+	//---------------------------------------------------
+	void feedbackWrite(List<Double> feedback)
+	{
+		jsonObj.put("feedback", feedback);
+		jsonWrite();
+	}
+	
+	//---------------------------------------------------
+	//List<Double> feedbackRead()
+	//フィードバック処理部で入力されたフィードバックを
+	//JSONファイルから読み込むメソッド
+	//feedback:書き込むフィードバックのリスト
+	//---------------------------------------------------
 	List<Double> feedbackRead()
-	{
-		JSONObject obj = new JSONObject();
-		JSONParser parser = new JSONParser();
-		List<Double> fbRead = new ArrayList<Double>();
-		try
-		{
-			FileReader reader = new FileReader("./data.json");
-			obj = (JSONObject)parser.parse(reader);
-			JSONArray fbData = (JSONArray)obj.get("feedback");
-			if(fbData != null) 
-			{
-				for(int i=0; i<fbData.size(); i++) 
-				{
-					fbRead.add((double)fbData.get(i));
-				}
-			}
-			
-			reader.close();
-		} catch(IOException | ParseException e) {
-			e.printStackTrace();
-		}
-		return fbRead;
+	{	
+		return arrayRead("feedback");
 	}
 	
-	private static Connection con = null;
-	
-	public static void closeConnection()
+	//---------------------------------------------------
+	//static void closeConnection()
+	//DBと接続を切るメソッド
+	//---------------------------------------------------
+	static void closeConnection()
 	{
 		if(con != null) 
 		{
@@ -157,25 +258,33 @@ public class UserData
 		}
 	}
 	
-	public static Connection getConnection() 
+	//---------------------------------------------------
+	//static void getConnection()
+	//DBと接続するメソッド
+	//---------------------------------------------------
+	static void getConnection() 
 	{
 		if(con == null)
 		{
 			try 
 			{
 				Class.forName("org.sqlite.JDBC");
-				con = DriverManager.getConnection("jdbc:sqlite:user.sqlite3");
+				con = DriverManager.getConnection("jdbc:sqlite:" + Constant.DBPATH);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return con;
 	}
 	
-	
+	//---------------------------------------------------
+	//void clothesWrite(Clothes clothes)
+	//入力された服装をDBテーブルに格納するメソッド
+	//clothes:入力された服装データ
+	//---------------------------------------------------
 	void clothesWrite(Clothes clothes) 
 	{
-		String sql = "INSERT INTO TEST_TABLE(name, kind, part, index) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO " + Constant.TABLENAME1 + 
+				" (name, kind, part, cindex) VALUES (?, ?, ?, ?)";
 		PreparedStatement prestmt;
 		try
 		{
@@ -191,9 +300,16 @@ public class UserData
 			e.printStackTrace();
 		}
 	}
+	
+	//---------------------------------------------------
+	//void clothesUpdate(Clothes clothes)
+	//入力された服装をDBテーブルに更新するメソッド
+	//clothes:入力された服装データ
+	//---------------------------------------------------
 	void clothesUpdate(Clothes clothes) 
 	{
-		String sql = "UPDATE TEST_TABLE SET name = ?, kind = ?, part = ?, index = ? WHERE id = ?";
+		String sql = "UPDATE " + Constant.TABLENAME1 + 
+				" SET name = ?, kind = ?, part = ?, cindex = ? WHERE id = ?";
 		PreparedStatement prestmt;
 		try
 		{
@@ -203,7 +319,7 @@ public class UserData
 			prestmt.setString(2, clothes.kind);
 			prestmt.setString(3, clothes.part);
 			prestmt.setDouble(4, clothes.index);
-				
+			
 			prestmt.executeUpdate();
 			prestmt.close();
 		} catch(Exception e) {
@@ -211,9 +327,14 @@ public class UserData
 		}
 	}
 	
+	//---------------------------------------------------
+	//void clothesDelete(Clothes clothes)
+	//入力された服装をDBテーブルから削除するメソッド
+	//clothes:入力された服装データ
+	//---------------------------------------------------
 	void clothesDelete(Clothes clothes) 
 	{
-		String sql = "DELETE FROM TEST_TABLE WHERE id = ?";
+		String sql = "DELETE FROM " + Constant.TABLENAME1 + " WHERE id = ?";
 		PreparedStatement prestmt;
 		try
 		{
@@ -227,18 +348,24 @@ public class UserData
 		}
 	}
 	
+	//------------------------------------------------
+	//List<Clothes> clothesRead()
+	//DBテーブルに格納された服装データを
+	//取り出すメソッド
+	//cRead:DBに入力されている服装データ
+	//------------------------------------------------
 	List<Clothes> clothesRead()
 	{
 		List<Clothes> cRead = new ArrayList<Clothes>();
 		try 
 		{
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM TEST_TABLE";
+			String sql = "SELECT * FROM " + Constant.TABLENAME1;
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) 
 			{
 				cRead.add(new Clothes(rs.getInt("id"), rs.getString("name"), rs.getString("kind"), 
-											rs.getString("part"), rs.getDouble("index")));
+											rs.getString("part"), rs.getDouble("cindex")));
 			}
 			stmt.close();
 		} catch(Exception e) {
@@ -247,15 +374,81 @@ public class UserData
 		return cRead;
 	}
 	
-	List<Clothes> createCList() 
+	//---------------------------------------------------
+	//void clothesReset()
+	//DBに格納された服装情報をすべて削除するメソッド
+	//---------------------------------------------------
+	void clothesReset()
 	{
-		
+		String sql1 = "DELETE FROM " + Constant.TABLENAME1;
+		String sql2 = "DELETE FROM " + Constant.TABLENAME2;
+		PreparedStatement prestmt;
+		try
+		{
+			prestmt = con.prepareStatement(sql1);
+			prestmt.executeUpdate();
+			prestmt = con.prepareStatement(sql2);
+			prestmt.executeUpdate();
+			prestmt.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
+	//---------------------------------------------------
+	//void createCList()
+	//提案された服装をDBテーブルに一時格納するメソッド
+	//clothes:C5服装提案部により提案された服装データ
+	//---------------------------------------------------
+	void createCList(List<Clothes> clothes) 
+	{
+		String sql = "INSERT INTO " + Constant.TABLENAME2 + " (name, kind, part, cindex) VALUES (?, ?, ?, ?)";
+		PreparedStatement prestmt;
+		try
+		{
+			//テーブルの初期化
+			prestmt = con.prepareStatement("DELETE FROM " + Constant.TABLENAME2);
+			prestmt.executeUpdate();
+			//テーブルに服装情報を格納していく
+			prestmt = con.prepareStatement(sql);
+			for(int i = 0; i < clothes.size(); ++i)
+			{
+				prestmt.setString(1, clothes.get(i).name);
+				prestmt.setString(2, clothes.get(i).kind);
+				prestmt.setString(3, clothes.get(i).part);
+				prestmt.setDouble(4, clothes.get(i).index);
+					
+				prestmt.executeUpdate();
+			}
+			prestmt.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//------------------------------------------------
+	//List<Clothes> getCList()
+	//DBテーブルに格納された提案された服装データを
+	//取り出すメソッド
+	//clothes:C5服装提案部により提案された服装データ
+	//------------------------------------------------
 	List<Clothes> getCList()
 	{
-		
+		List<Clothes> clothes = new ArrayList<Clothes>();
+		try 
+		{
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM " + Constant.TABLENAME2;
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) 
+			{
+				clothes.add(new Clothes(rs.getInt("id"), rs.getString("name"), rs.getString("kind"), 
+											rs.getString("part"), rs.getDouble("cindex")));
+			}
+			stmt.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return clothes;
 	}
 }
-
-
