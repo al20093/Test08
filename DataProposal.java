@@ -37,9 +37,9 @@ public class DataProposal
 	
 	
 	//-------------------------------------------- 
-	//List<Clothes> getClothes(String area) 
+	//List<Clothes> getClothes(String[] weatherData) 
 	////服装データ要求
-	//weatherData:電気情報
+	//weatherData:天気情報
 	//--------------------------------------------
 	List<Clothes> getClothes(String[] weatherData)
 	{
