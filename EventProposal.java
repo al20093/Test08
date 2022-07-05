@@ -98,7 +98,7 @@ public class EventProposal
 	//void clickCancel(Button bt) 
 	//"キャンセル"ボタンが押されたら
 	//W5地域入力画面作成からW4ホーム画面に遷移
-	//bt:"服装提案"ボタン
+	//bt:"キャンセル"ボタン
 	//-----------------------------------------------------
 	void clickCancel(Button bt)
 	{
