@@ -93,12 +93,21 @@ public class Constant {
 	final static String DELETECOMPLETE = "削除が完了しました。";
 	//服装提案時確認メッセージ
 	final static String PROPOSALCONFIRM = "服装提案を行いますか？";
+	//重み入力時エラー
+	final static String WEIGHTERROR = "1から11までの数字を半角で入力してください。";
 	//名称エラー
 	final static String NAMEERROR = "名称は１６文字以内で入力してください。";
 	//服装分類エラー
 	final static String CLOTHESERROR = "服装分類は１６文字以内で入力してください。";
 	//部位分類エラー
 	final static String PARTERROR = "部位分類は１６文字以内で入力してください。";
+	final static String PARTNAMEERROR = "部位分類は「" + 
+											Constant.PARTNAME[0] + "・" +
+											Constant.PARTNAME[1] + "・" +
+											Constant.PARTNAME[2] + "・" +
+											Constant.PARTNAME[3] + "・" +
+											Constant.PARTNAME[4] +
+											"」のどれかを入力してください。";
 	//服装指数エラー
 	final static String INDEXERROR = "服装指数は半角小数形式、小数第二位以内で入力してください。";
 	//空欄エラー

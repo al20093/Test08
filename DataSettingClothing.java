@@ -108,11 +108,27 @@ class DataSettingClothing
 		{
 			return -4;
 		}
-		//部位分類　文字数チェック
+		//部位分類
 		chCount = clothes.part.toCharArray();
+		//文字数チェック
 		if(chCount.length > Constant.LIMITWORDS)
 		{
 			return -3;
+		}
+		//ワードチェック
+		for(int i = 0; i < Constant.PARTNAME.length; ++i)
+		{
+			if(!clothes.part.equals(Constant.PARTNAME[i]))
+			{
+				if(i < Constant.PARTNAME.length - 1)
+				{
+					continue;
+				} else {
+					//頭・手・上半身・下半身・足のどれでもなかったら
+					return -6;
+				}
+			}
+			break;
 		}
 		//服装指数　小数点チェック
 		chCount = Double.toString(clothes.index).toCharArray();

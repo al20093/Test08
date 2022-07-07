@@ -70,7 +70,6 @@ public class EventProposal
 					new CreateAlert().failure(Constant.EMPTYAREAERROR);
 				} catch (Exception e) {
 					//それ以外の場合
-					new CreateAlert().failure(Constant.UNKNOWNERROR);
 					e.printStackTrace();
 				}
 			});
