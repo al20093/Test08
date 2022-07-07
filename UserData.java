@@ -8,6 +8,8 @@
 
 package application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -96,6 +98,7 @@ class UserData
 	{
 		try
 		{
+			//ファイル書き込み
 			FileWriter file = new FileWriter(Constant.JSONPATH);
 			file.write(jsonObj.toJSONString());
 			file.flush();
@@ -117,9 +120,19 @@ class UserData
 		JSONParser parser = new JSONParser();
 		try 
 		{
+			//ファイル読み込み
 			FileReader reader = new FileReader(Constant.JSONPATH);
 			obj = (JSONObject)parser.parse(reader);
 			reader.close();
+		} catch(FileNotFoundException e) {
+			File newFile = new File(Constant.JSONPATH);
+			try
+			{
+				newFile.createNewFile();
+			} catch(IOException e1) {
+				e1.printStackTrace();
+			}
+			obj.put("boot", false);
 		} catch(IOException | ParseException e) {
 			e.printStackTrace();
 		}
@@ -171,18 +184,33 @@ class UserData
 	{
 		return (boolean)jsonRead().get("flag");
 	}
-	
+
+	//---------------------------------------------------
+	//void genderWrite
+	//性別データの書き込みを行うメソッド
+	//gender:性別　男：true 女：false
+	//---------------------------------------------------
 	void genderWrite(boolean gender)
 	{
 		jsonObj.put("gender", gender);
 		jsonWrite();
 	}
 	
+	//---------------------------------------------------
+	//void genderRead
+	//性別データの読み込みを行うメソッド
+	//gender:読み込んだ性別データ
+	//---------------------------------------------------
 	boolean genderRead()
 	{
 		return (boolean)jsonRead().get("gender");
 	}
 	
+	//---------------------------------------------------
+	//void genderRead
+	//性別データの読み込みを行うメソッド
+	//gender:読み込んだ性別データ
+	//---------------------------------------------------
 	void weightWrite(List<Double> weight)
 	{
 		jsonObj.put("weight", weight);

@@ -74,6 +74,9 @@ public class EventSettingClothing
 				case -5 :
 					new CreateAlert().failure(Constant.INDEXERROR);
 					return;
+				case -6 :
+					new CreateAlert().failure(Constant.PARTNAMEERROR);
+					return;
 				}
 				//登録完了アラート画面表示
 				if(new DataSettingClothing().addClothes(clothes))
@@ -93,7 +96,6 @@ public class EventSettingClothing
 				new CreateAlert().failure(Constant.INDEXERROR);
 			} catch(Exception e) {
 				//それ以外の場合
-				new CreateAlert().failure(Constant.UNKNOWNERROR);
 				e.printStackTrace();
 			}
 		}); 
