@@ -134,7 +134,7 @@ class SceneWeight extends SceneMain
 	//void getScene()
 	//シーン情報を返すメソッド
 	//画面遷移に利用する
-	//scene:シーンのレイアウト情報
+	//scene:シーンのレイアウト情報 
 	//--------------------------------------------
 	Scene getScene() 
 	{
