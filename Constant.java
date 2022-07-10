@@ -95,6 +95,7 @@ public class Constant {
 	final static String PROPOSALCONFIRM = "服装提案を行いますか？";
 	//重み入力時エラー
 	final static String WEIGHTERROR = "1から11までの数字を半角で入力してください。";
+	final static String WEIGHTNUMERROR = "重みは半角小数形式，小数第二位以内で入力してください。";
 	//名称エラー
 	final static String NAMEERROR = "名称は１６文字以内で入力してください。";
 	//服装分類エラー

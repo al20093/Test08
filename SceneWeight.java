@@ -1,8 +1,8 @@
 /**********************************************/
-/*author:金　東柱 6/25更新
+/*author:金　東柱 7/5更新
 /*C4:重み処理部所属
 /*SceneWeight:
-/*重み設定画面の画面を記述したクラス
+/*重み入力画面の画面を記述したクラス
 /**********************************************/
 
 package application;
@@ -16,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -38,13 +37,20 @@ class SceneWeight extends SceneMain
 		super(stage);
 	}
 	
+	//-------------------------------------------- 
+	//void createWeight() 
+	//W3重み入力画面作成
+	//--------------------------------------------
 	void createWeight()
-	{
+	{		
+			//ペイン作成
 			BorderPane bp = new BorderPane();
 			VBox cvbox = new VBox();
 			GridPane gptf = new GridPane();
 			HBox chbox = new HBox();
+			//イベントオブジェクト作成
 			EventWeight event = new EventWeight(this);
+			//ラベルリスト作成
 			List<Label> lb = new ArrayList<Label>()
 			{
 				{
@@ -111,20 +117,24 @@ class SceneWeight extends SceneMain
 			chbox.setSpacing(171);
 			chbox.setAlignment(Pos.CENTER);
 			
+			//ペイン割り当て
 			bp.setTop(cvbox);
 			bp.setCenter(gptf);
 			bp.setBottom(chbox);
 			
+			//イベント割り当て
 			event.clickCancel(button.get(0));
 			event.clickRegister(button.get(1), chtf);
 
+			//シーンの作成
 			this.scene = new Scene(bp, Constant.WIDTH, Constant.HEIGHT);
 	}
+	
 	//-------------------------------------------- 
 	//void getScene()
 	//シーン情報を返すメソッド
 	//画面遷移に利用する
-	//scene:シーンのレイアウト情報
+	//scene:シーンのレイアウト情報 
 	//--------------------------------------------
 	Scene getScene() 
 	{
