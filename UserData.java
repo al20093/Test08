@@ -1,5 +1,5 @@
 /**********************************************/
-/*author:金　東柱 6/25更新
+/*author:金　東柱 7/5更新
 /*		:佐野　渉 06/27更新 
 /*C9:ユーザ情報管理部
 /*UserData:
@@ -184,11 +184,12 @@ class UserData
 	{
 		return (boolean)jsonRead().get("flag");
 	}
-
+	
 	//---------------------------------------------------
-	//void genderWrite
-	//性別データの書き込みを行うメソッド
-	//gender:性別　男：true 女：false
+	//void genderWrite(boolean gender)
+	//性別処理部で入力された性別をJSONファイルに
+	//書き込むメソッド
+	//gender:書き込む性別の状態
 	//---------------------------------------------------
 	void genderWrite(boolean gender)
 	{
@@ -197,9 +198,10 @@ class UserData
 	}
 	
 	//---------------------------------------------------
-	//void genderRead
-	//性別データの読み込みを行うメソッド
-	//gender:読み込んだ性別データ
+	//boolean genderRead()
+	//性別処理部で入力された性別をJSONファイルから
+	//読み込むメソッド
+	//boolean:読み込んだ性別の状態
 	//---------------------------------------------------
 	boolean genderRead()
 	{
@@ -207,9 +209,10 @@ class UserData
 	}
 	
 	//---------------------------------------------------
-	//void genderRead
-	//性別データの読み込みを行うメソッド
-	//gender:読み込んだ性別データ
+	//void weightWrite(List<Double> weight)
+	//重み処理部で入力された重みをJSONファイルに
+	//書き込むメソッド
+	//weight:書き込む重みのリスト
 	//---------------------------------------------------
 	void weightWrite(List<Double> weight)
 	{
@@ -217,21 +220,21 @@ class UserData
 		jsonWrite();
 	}
 	
+	//---------------------------------------------------
+	//List<Double> weightRead()
+	//重み処理部で入力された重みをJSONファイルから
+	//読み込むメソッド
+	//weight:読み込む重みのリスト
+	//---------------------------------------------------
 	List<Double> weightRead()
 	{
 		return arrayRead("weight");
 	}
-	void feedbackWrite(List<Double> feedback)
-	{
-		jsonObj.put("feedback", feedback);
-		jsonWrite();
-	}
 	
-	List<Double> feedbackRead()
-	{	
-		return arrayRead("feedback");
-	}
-	
+	//---------------------------------------------------
+	//static void closeConnection()
+	//DBと接続を切るメソッド
+	//---------------------------------------------------
 	static void closeConnection()
 	{
 		if(con != null) 
@@ -245,6 +248,10 @@ class UserData
 		}
 	}
 	
+	//---------------------------------------------------
+	//static void getConnection()
+	//DBと接続するメソッド
+	//---------------------------------------------------
 	static void getConnection() 
 	{
 		if(con == null)
@@ -259,6 +266,11 @@ class UserData
 		}
 	}
 	
+	//---------------------------------------------------
+	//void clothesWrite(Clothes clothes)
+	//入力された服装をDBテーブルに格納するメソッド
+	//clothes:入力された服装データ
+	//---------------------------------------------------
 	void clothesWrite(Clothes clothes) 
 	{
 		String sql = "INSERT INTO " + Constant.TABLENAME1 + 
@@ -278,6 +290,12 @@ class UserData
 			e.printStackTrace();
 		}
 	}
+	
+	//---------------------------------------------------
+	//void clothesUpdate(Clothes clothes)
+	//入力された服装をDBテーブルに更新するメソッド
+	//clothes:入力された服装データ
+	//---------------------------------------------------
 	void clothesUpdate(Clothes clothes) 
 	{
 		String sql = "UPDATE " + Constant.TABLENAME1 + 
@@ -299,6 +317,11 @@ class UserData
 		}
 	}
 	
+	//---------------------------------------------------
+	//void clothesDelete(Clothes clothes)
+	//入力された服装をDBテーブルから削除するメソッド
+	//clothes:入力された服装データ
+	//---------------------------------------------------
 	void clothesDelete(Clothes clothes) 
 	{
 		String sql = "DELETE FROM " + Constant.TABLENAME1 + " WHERE id = ?";
@@ -315,6 +338,12 @@ class UserData
 		}
 	}
 	
+	//------------------------------------------------
+	//List<Clothes> clothesRead()
+	//DBテーブルに格納された服装データを
+	//取り出すメソッド
+	//cRead:DBに入力されている服装データ
+	//------------------------------------------------
 	List<Clothes> clothesRead()
 	{
 		List<Clothes> cRead = new ArrayList<Clothes>();

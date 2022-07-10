@@ -67,7 +67,7 @@ public class EventWeight
 				String input = chtf.get(i).getText();  //TextFieldの内容をStringで受け取るinput
 				if(input == null || input.trim().isEmpty())   // inputが空の場合の処理
 				{
-					new CreateAlert().failure(Constant.WEIGHTERROR);
+					new CreateAlert().failure(Constant.EMPTYERROR);
 					weight.assignSceneToStage("weight");
 					break;
 				} else {
@@ -90,7 +90,7 @@ public class EventWeight
 								wdata.add(k);
 								checkdata++;
 							} else {
-								new CreateAlert().failure(Constant.INDEXERROR);
+								new CreateAlert().failure(Constant.WEIGHTNUMERROR);
 								weight.assignSceneToStage("weight");
 								break;
 							}
@@ -100,7 +100,7 @@ public class EventWeight
 								wdata.add(k);
 								checkdata++;
 							} else {
-								new CreateAlert().failure(Constant.INDEXERROR);
+								new CreateAlert().failure(Constant.WEIGHTNUMERROR);
 								weight.assignSceneToStage("weight");
 								break;
 							}
